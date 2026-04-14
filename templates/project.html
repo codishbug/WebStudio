@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- PROJECT SECTION -->
+<div class="container-fluid project py-5">
+
+<div class="container">
+
+<div class="text-center mx-auto pb-5" style="max-width:600px">
+<h5 class="text-primary">Our Project</h5>
+<h1>Our Recently Completed Projects</h1>
+</div>
+<div class="filter-wrapper">
+
+    <div class="filter-group">
+        <span class="filter-label">Division</span>
+
+     <button type="button" class="filter-btn active" data-division="all">All</button>
+<button type="button" class="filter-btn" data-division="a">A</button>
+<button type="button" class="filter-btn" data-division="b">B</button>
+    </div>
+
+
+    <div class="custom-dropdown" id="categoryDropdown">
+    <div class="dropdown-selected">
+        <span>All Categories</span>
+        <i class="fa fa-chevron-down"></i>
+    </div>
+
+    <div class="dropdown-options">
+        <div data-value="all">All Categories</div>
+        <div data-value="portfolio">Portfolio</div>
+        <div data-value="business">Business</div>
+        <div data-value="e-commerce">E-Commerce</div>
+        <div data-value="landing page">Landing Page</div>
+    </div>
+</div>
+
+</div>
+
+<div class="row g-5">
+{% if projects %}
+{% for project in projects %}
+
+<div class="col-md-6 col-lg-6 project-card wow fadeIn"
+data-category="{{ project.category|lower }}"
+data-division="{{ project.division|lower }}"
+data-wow-delay=".3s">
+
+
+<div class="project-item">
+
+<div class="project-img">
+
+{% if project.thumbnail %}
+<img src="{{ project.thumbnail }}" class="project-photo" alt="{{ project.title }}">
+
+{% elif project.images and project.images|length > 0 %}
+<img src="{{ project.images[0] }}" class="project-photo" alt="{{ project.title }}">
+
+{% else %}
+<img src="https://via.placeholder.com/400x300?text=No+Image" class="project-photo">
+{% endif %}
+
+<div class="project-overlay">
+
+<a href="{{ url_for('project_detail', project_id=project.id) }}" class="text-center">
+
+<h4 class="text-secondary">{{ project.title }}</h4>
+<p class="m-0 text-white">{{ project.category }}</p>
+
+</a>
+
+</div>
+</div>
+</div>
+</div>
+
+{% endfor %}
+{% else %}
+
+<div class="col-12 text-center">
+<h5>No Projects Available</h5>
+</div>
+
+{% endif %}
+
+</div>
+</div>
+</div>
+ 
+
+<!-- CATEGORY FILTER SCRIPT -->
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+let currentDivision = "all";
+let currentCategory = "all";
+
+const cards = document.querySelectorAll(".project-card");
+const buttons = document.querySelectorAll(".filter-btn");
+
+/* DIVISION BUTTON */
+buttons.forEach(button => {
+    button.addEventListener("click", function(){
+        buttons.forEach(btn => btn.classList.remove("active"));
+        this.classList.add("active");
+
+        currentDivision = this.dataset.division;
+        applyFilter();
+    });
+});
+
+/* 🔥 CUSTOM DROPDOWN */
+const dropdown = document.getElementById("categoryDropdown");
+const selectedText = dropdown.querySelector(".dropdown-selected span");
+const options = dropdown.querySelectorAll(".dropdown-options div");
+
+dropdown.querySelector(".dropdown-selected").addEventListener("click", () => {
+    dropdown.classList.toggle("active");
+});
+
+options.forEach(option => {
+    option.addEventListener("click", () => {
+        selectedText.textContent = option.textContent;
+        currentCategory = option.dataset.value.toLowerCase();
+
+        dropdown.classList.remove("active");
+        applyFilter();
+    });
+});
+
+document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("active");
+    }
+});
+
+/* FILTER FUNCTION */
+function applyFilter(){
+    cards.forEach(card => {
+
+        let cardDivision = card.dataset.division;
+        let cardCategory = card.dataset.category;
+
+        let divisionMatch = (currentDivision === "all" || cardDivision === currentDivision);
+        let categoryMatch = (currentCategory === "all" || cardCategory === currentCategory);
+
+        card.style.display = (divisionMatch && categoryMatch) ? "" : "none";
+    });
+}
+
+});
+</script>
+
+{% endblock %}

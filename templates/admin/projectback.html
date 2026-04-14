@@ -1,0 +1,232 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Project Management{% endblock %}
+{% block page_title %}Project Management{% endblock %}
+
+{% block content %}
+
+<br>
+
+        <!-- ADD PROJECT -->
+
+        <div class="admin-table">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-4">Add New Project</h3>
+             <a href="{{ url_for('all_projects') }}" class="admin-btn">
+                View All Projects →
+            </a>
+            
+         </div>
+
+            <form id="projectForm" method="POST" enctype="multipart/form-data">
+
+                <div class="project-wrapper">
+
+                    <!-- LEFT SIDE -->
+                    <div class="project-left">
+
+                        <div class="form-row">
+                            <input type="text" name="title" placeholder="Project Name" required>
+                            <input type="text" name="description" placeholder="Short Description" required>
+                        </div>
+
+                        <div class="form-row">
+                            <select name="category" required>
+                                <option value="">Select Category</option>
+                                <option>Portfolio</option>
+                                <option>E-Commerce</option>
+                                <option>Business</option>
+                                <option>Landing Page</option>
+                            </select>
+
+                            <label class="checkbox-wrapper">
+                                <input type="checkbox" id="hasPriceCheck">
+                                Has Price
+                            </label>
+
+                            <div class="division-switch">
+                                <span class="division-text">A</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="divisionToggle">
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="division-text">B</span>
+                                <input type="hidden" name="division" id="divisionValue" value="A">
+                            </div>
+                        </div>
+
+                        <div class="form-row price-row" id="priceFields" style="display:none;">
+                            <input type="number" id="basePrice" placeholder="Base Price">
+                            <select id="baseCurrency">
+                                <option value="">Currency</option>
+                                <option>USD</option>
+                                <option>INR</option>
+                                <option>EUR</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <input type="url" name="preview_link" placeholder="Preview Link">
+                            <input type="url" name="github_link" placeholder="GitHub Link">
+                        </div>
+
+                        <button type="submit" class="admin-btn mt-3 w-100">Publish Project</button>
+
+                    </div>
+
+                    <!-- RIGHT SIDE -->
+                    <div class="project-right">
+                        <div class="image-upload-box" id="dropArea">
+                            <input type="file" id="fileInput" multiple hidden>
+                            <div class="plus-icon">+</div>
+                            <p>Drag & Drop Images or Click</p>
+                        </div>
+                        <div id="previewContainer" class="preview-container"></div>
+                    </div>
+
+                </div>
+            </form>
+            </div>
+        </div>
+
+
+
+<!-- SUCCESS POPUP -->
+<div id="successPopup" class="success-popup">
+    <div class="success-box">
+        <div class="success-icon">
+            <svg viewBox="0 0 52 52">
+                <circle class="success-circle" cx="26" cy="26" r="25"></circle>
+                <path class="success-check" d="M14 27l7 7 16-16"></path>
+            </svg>
+        </div>
+        <h5 class="success-title">Project Published Successfully</h5>
+        <button class="success-btn" id="okBtn">OK</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const checkbox = document.getElementById("hasPriceCheck");
+    const priceFields = document.getElementById("priceFields");
+    const basePrice = document.getElementById("basePrice");
+    const baseCurrency = document.getElementById("baseCurrency");
+    const dropArea = document.getElementById("dropArea");
+    const fileInput = document.getElementById("fileInput");
+    const previewContainer = document.getElementById("previewContainer");
+    const form = document.getElementById("projectForm");
+    const successBox = document.getElementById("successPopup");
+    const okBtn = document.getElementById("okBtn");
+    const submitBtn = form.querySelector("button[type='submit']");
+    const divisionToggle = document.getElementById("divisionToggle");
+    const divisionValue = document.getElementById("divisionValue");
+
+    let selectedFiles = [];
+
+    // Show/hide price
+    checkbox.addEventListener("change", function() {
+        priceFields.style.display = this.checked ? "flex" : "none";
+        basePrice.required = this.checked;
+        baseCurrency.required = this.checked;
+    });
+
+    // Division toggle
+    divisionToggle.addEventListener("change", function() {
+        divisionValue.value = this.checked ? "B" : "A";
+    });
+
+    // File selection
+    dropArea.addEventListener("click", () => fileInput.click());
+    dropArea.addEventListener("dragover", e => { e.preventDefault(); dropArea.style.borderColor = "#6c63ff"; });
+    dropArea.addEventListener("dragleave", () => { dropArea.style.borderColor = "#ccc"; });
+    dropArea.addEventListener("drop", e => {
+        e.preventDefault(); dropArea.style.borderColor = "#ccc";
+        addFiles(Array.from(e.dataTransfer.files));
+    });
+    fileInput.addEventListener("change", function() { addFiles(Array.from(this.files)); });
+
+    function addFiles(files) {
+        files.forEach(file => selectedFiles.push(file));
+        showPreviews();
+    }
+
+    function showPreviews() {
+        previewContainer.innerHTML = "";
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const wrapper = document.createElement("div");
+                wrapper.classList.add("preview-item");
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                const removeBtn = document.createElement("div");
+                removeBtn.classList.add("remove-image-btn");
+                removeBtn.innerHTML = "&times;";
+                removeBtn.onclick = () => { selectedFiles.splice(index, 1); showPreviews(); };
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                previewContainer.appendChild(wrapper);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Form submit
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        if (!selectedFiles.length) { alert("Please upload at least one image."); return; }
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Publishing...";
+
+        const formData = new FormData();
+        formData.append("title", form.title.value);
+        formData.append("description", form.description.value);
+        formData.append("category", form.category.value);
+        formData.append("preview_link", form.preview_link.value);
+        formData.append("github_link", form.github_link.value);
+        formData.append("division", divisionValue.value);
+        if (checkbox.checked) {
+            formData.append("has_price", "true");
+            formData.append("base_price", basePrice.value);
+            formData.append("base_currency", baseCurrency.value);
+        } else { formData.append("has_price", "false"); }
+        selectedFiles.forEach(file => formData.append("image_file", file));
+
+        try {
+            const response = await fetch("/admin/add-project", { method: "POST", body: formData });
+            const result = await response.json();
+
+            if (result.success) {
+                successBox.style.display = "flex";
+                form.reset();
+                previewContainer.innerHTML = "";
+                selectedFiles = [];
+                priceFields.style.display = "none";
+                divisionValue.value = "A";
+                divisionToggle.checked = false;
+
+                setTimeout(() => { successBox.style.display = "none"; }, 2000);
+            } else {
+                alert("Error: " + result.error);
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong.");
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Publish Project";
+    });
+
+    okBtn.addEventListener("click", function() {
+        successBox.style.display = "none";
+    });
+});
+</script>
+
+{% endblock %}

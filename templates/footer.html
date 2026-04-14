@@ -1,0 +1,81 @@
+<!-- Footer Start -->
+<div class="container-fluid footer bg-dark wow fadeIn" data-wow-delay=".3s">
+    <div class="container pt-3 pb-3">
+        <div class="row g-5 justify-content-center">
+
+            <!-- LOGO + DESCRIPTION -->
+            <div class="col-lg-4 col-md-6">
+                <a href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='user/img/webstudio_img.png') }}" 
+                         alt="WebStudio Logo" class="footer-logo">
+                </a>
+                <p class="mt-4 text-light" style="text-align: justify;">
+                    WebStudio is a modern platform offering professionally designed website templates 
+                    for businesses, creators, and developers. Browse templates, preview designs, and 
+                    choose the perfect layout for your website. Need a complete website? Our team is 
+                    here to help.
+                </p>
+            </div>
+
+            <!-- SHORT LINKS -->
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center text-center">
+                <a href="#" class="h3 text-secondary">Short Link</a>
+                <div class="mt-4 d-flex flex-column align-items-center short-link">
+                    <a href="{{ url_for('about') }}" class="mb-2 text-white">
+                        <i class="fas fa-angle-right text-secondary me-2"></i>About
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="mb-2 text-white">
+                        <i class="fas fa-angle-right text-secondary me-2"></i>Contact
+                    </a>
+                    <a href="{{ url_for('service') }}" class="mb-2 text-white">
+                        <i class="fas fa-angle-right text-secondary me-2"></i>Services
+                    </a>
+                    <a href="{{ url_for('project') }}" class="mb-2 text-white">
+                        <i class="fas fa-angle-right text-secondary me-2"></i>Projects
+                    </a>
+                    <a href="{{ url_for('blog') }}" class="mb-2 text-white">
+                        <i class="fas fa-angle-right text-secondary me-2"></i>Blogs
+                    </a>
+                    <a href="{{ url_for('faq') }}" class="mb-2 text-white">
+                        <i class="fas fa-angle-right text-secondary me-2"></i>FAQs
+                    </a>
+                </div>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center text-center">
+                <a href="#" class="h3 text-secondary">Contact Us</a>
+                <div class="text-white mt-4 d-flex flex-column contact-link w-100">
+                    <a href="#" class="pb-3 text-light border-bottom border-primary">
+                        <i class="fas fa-map-marker-alt text-secondary me-2"></i>
+                        Pune, Maharashtra, India
+                    </a>
+                    <a href="#" class="py-3 text-light border-bottom border-primary">
+                        <i class="fas fa-phone-alt text-secondary me-2"></i>
+                        +91 7040974090
+                    </a>
+                    <a href="#" class="py-3 text-light border-bottom border-primary">
+                        <i class="fas fa-envelope text-secondary me-2"></i>
+                        thewebstudio.io@gmail.com
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="text-light mt-5 mb-4">
+
+        <!-- COPYRIGHT -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <span class="text-light">
+                    <a href="{{ url_for('index') }}" class="text-secondary">
+                        <i class="fas fa-copyright text-secondary me-2"></i>WebStudio,
+                    </a>All rights reserved.
+                </span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Footer End -->

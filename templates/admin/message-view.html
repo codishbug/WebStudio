@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>View Message | WebStudio</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+
+   <!-- LIBRARIES -->
+    <link href="{{ url_for('static', filename='user/lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+    <!-- BOOTSTRAP -->
+    <link href="{{ url_for('static', filename='user/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- MAIN THEME -->
+    <link href="{{ url_for('static', filename='user/css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='admin/admin-theme.css') }}" rel="stylesheet">
+
+    <!-- ADMIN CSS -->
+    <link href="{{ url_for('static', filename='admin/admin.css') }}" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+<style>
+
+/* ===============================
+   BACKGROUND (MAIN IMPROVEMENT)
+   =============================== */
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(120deg,#e9f5f4 0%,#f6fffe 50%,#e1f2f0 100%);
+    overflow-x: hidden;
+}
+
+/* floating animated blobs */
+.bg-shape {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.45;
+    z-index: 0;
+    animation: floatMove 12s infinite ease-in-out alternate;
+}
+
+.bg-shape.one {
+    width: 300px;
+    height: 300px;
+    background: #4ec9cb;
+    top: 80px;
+    left: -80px;
+}
+
+.bg-shape.two {
+    width: 260px;
+    height: 260px;
+    background: #116466;
+    bottom: 80px;
+    right: -60px;
+    animation-delay: 2s;
+}
+
+.bg-shape.three {
+    width: 200px;
+    height: 200px;
+    background: #4ec9cb;
+    bottom: 200px;
+    left: 25%;
+    animation-delay: 4s;
+}
+
+@keyframes floatMove {
+    from { transform: translateY(0px) }
+    to { transform: translateY(40px) }
+}
+
+/* ===============================
+   PAGE WRAPPER
+   =============================== */
+
+.page-wrapper {
+    max-width: 900px;
+    margin: 70px auto;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* back button */
+.back-btn {
+    border-radius: 40px;
+    padding: 10px 22px;
+    font-weight: 500;
+    border: none;
+    background: var(--bs-primary);
+    color: #fff;
+    transition: .3s;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 18px rgba(17,100,102,0.25);
+}
+
+.back-btn:hover {
+    background: var(--bs-secondary);
+    transform: translateY(-2px);
+}
+
+/* ===============================
+   MESSAGE CARD (UNCHANGED LOOK)
+   =============================== */
+
+.message-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.10);
+    border: 1px solid #e8f0ef;
+    animation: fadeUp .6s ease;
+    position: relative;
+}
+
+/* subtle glow strip behind card */
+.message-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    background: linear-gradient(120deg, #4ec9cb, #116466);
+    opacity: .15;
+    z-index: -1;
+}
+
+@keyframes fadeUp {
+    from { transform: translateY(30px); opacity:0; }
+    to { transform: translateY(0); opacity:1; }
+}
+
+/* subject */
+.subject {
+    font-family: 'Saira', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--bs-primary);
+    margin-bottom: 15px;
+}
+
+/* meta info */
+.meta {
+    font-size: 14px;
+    color: #5a6c6a;
+    margin-bottom: 6px;
+}
+
+.meta strong {
+    color: var(--bs-dark);
+}
+
+/* message body */
+.message-body {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e9f5f4;
+    color: var(--bs-dark);
+    line-height: 1.7;
+    font-size: 16px;
+    white-space: pre-line;
+}
+
+/* loader */
+.loader {
+    text-align: center;
+    padding: 60px 0;
+}
+
+/* smooth hover depth */
+.message-card:hover {
+    transform: translateY(-4px);
+    transition: .3s;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.12);
+}
+/* ===============================
+   DARK MODE SUPPORT (MESSAGE VIEW)
+   =============================== */
+
+[data-theme="dark"] body {
+    background: radial-gradient(circle at top, #0f1f1e, #081414 70%) !important;
+}
+
+/* hide bright blobs in dark */
+[data-theme="dark"] .bg-shape {
+    opacity: 0.12;
+}
+
+/* CARD */
+[data-theme="dark"] .message-card {
+    background: linear-gradient(145deg, #132524, #0f1f1e) !important;
+    border: 1px solid rgba(78, 201, 203, 0.15) !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6) !important;
+}
+
+/* glow border */
+[data-theme="dark"] .message-card::before {
+    opacity: 0.25;
+}
+
+/* SUBJECT */
+[data-theme="dark"] .subject {
+    color: #4ec9cb !important;
+}
+
+/* META TEXT */
+[data-theme="dark"] .meta {
+    color: #9ccfcb !important;
+}
+
+[data-theme="dark"] .meta strong {
+    color: #ffffff !important;
+}
+
+/* MESSAGE BODY */
+[data-theme="dark"] .message-body {
+    color: #d9f7f6 !important;
+    border-top: 1px solid rgba(78, 201, 203, 0.15);
+}
+
+/* BACK BUTTON */
+[data-theme="dark"] .back-btn {
+    background: linear-gradient(135deg, #116466, #0d4444) !important;
+    color: #fff !important;
+}
+
+[data-theme="dark"] .back-btn:hover {
+    background: linear-gradient(135deg, #4ec9cb, #116466) !important;
+}
+
+/* LOADER TEXT */
+[data-theme="dark"] .loader p {
+    color: #cfeeee;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- animated background shapes -->
+<div class="bg-shape one"></div>
+<div class="bg-shape two"></div>
+<div class="bg-shape three"></div>
+
+<div class="page-wrapper">
+
+    <button class="back-btn" onclick="history.back()">
+        ← Back to Inbox
+    </button>
+
+    <div class="message-card" id="messageContainer">
+
+        <div class="loader">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-3">Loading message...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseUrl = "https://yuuvbsctwcrzubblkjlq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXZic2N0d2NyenViYmxramxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3ODIzNjYsImV4cCI6MjA4NjM1ODM2Nn0.2js6OF_T1oBECrSHJVgSF7_H5KYTpWqdQAGjgs5dVUs";
+const { createClient } = supabase;
+const supabaseClient = createClient(supabaseUrl, supabaseKey);
+
+const urlParams = new URLSearchParams(window.location.search);
+const messageId = urlParams.get("id");
+
+async function loadMessage(){
+
+    const { data, error } = await supabaseClient
+        .from("contact_messages")
+        .select("*")
+        .eq("id", messageId)
+        .single();
+
+    const container = document.getElementById("messageContainer");
+
+    if(error){
+        container.innerHTML = `
+            <div class="text-center">
+                <h4>Failed to load message</h4>
+                <p>Please try again later.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="subject">${data.subject}</div>
+
+        <div class="meta"><strong>Name:</strong> ${data.name}</div>
+        <div class="meta"><strong>Email:</strong> ${data.email}</div>
+        <div class="meta"><strong>Date:</strong> ${data.created_at ? new Date(data.created_at).toLocaleString() : "-"}</div>
+
+        <div class="message-body">${data.message}</div>
+    `;
+}
+
+loadMessage();
+</script>
+
+<script>
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+} else {
+    document.documentElement.setAttribute("data-theme", "light");
+}
+</script>
+
+</body>
+</html>

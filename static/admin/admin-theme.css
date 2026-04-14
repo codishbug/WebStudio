@@ -1,0 +1,739 @@
+/* =====================================
+   WEBRYX ADMIN DARK MODE (FINAL CLEAN)
+   ===================================== */
+
+
+/* ===============================
+   🌙 VARIABLES
+   =============================== */
+[data-theme="dark"] {
+    --admin-bg: #111918;
+    --admin-card: #1c2c2a;
+    --admin-text: #ddecea;
+    --admin-subtext: #a8c4c0;
+    --admin-border: rgba(78, 201, 203, 0.2);
+}
+
+
+/* ===============================
+   BASE
+   =============================== */
+[data-theme="dark"] body {
+    background: var(--admin-bg);
+    color: var(--admin-text);
+}
+
+
+/* ===============================
+   MAIN LAYOUT
+   =============================== */
+[data-theme="dark"] .admin-main {
+    background: var(--admin-bg);
+}
+
+
+/* ===============================
+   SIDEBAR
+   =============================== */
+[data-theme="dark"] .admin-sidebar {
+    background: #0f1a19;
+}
+
+[data-theme="dark"] .admin-sidebar h2 {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .admin-sidebar a {
+    color: var(--admin-subtext);
+}
+
+[data-theme="dark"] .admin-sidebar a:hover {
+    color: #4ec9cb;
+}
+
+[data-theme="dark"] .admin-sidebar li.active a {
+    background: #162220;
+    color: #4ec9cb;
+}
+
+
+/* ===============================
+   TOPBAR
+   =============================== */
+[data-theme="dark"] .admin-topbar {
+    background: #0f1a19;
+    border-bottom: 1px solid var(--admin-border);
+}
+
+
+/* ===============================
+   CARDS / CONTENT
+   =============================== */
+[data-theme="dark"] .card,
+[data-theme="dark"] .admin-card,
+[data-theme="dark"] .table,
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .modal-content {
+    background: var(--admin-card) !important;
+    color: var(--admin-text) !important;
+    border: 1px solid var(--admin-border);
+}
+
+
+/* ===============================
+   INPUT FIELDS (KEEP WHITE)
+   =============================== */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+    background: #ffffff !important;
+    color: #2C3531 !important;
+    border: 1px solid #4ec9cb !important;
+}
+
+
+/* ===============================
+   TABLE
+   =============================== */
+[data-theme="dark"] table {
+    color: var(--admin-text);
+}
+
+[data-theme="dark"] th {
+    color: #4ec9cb;
+}
+
+
+/* ===============================
+   LINKS
+   =============================== */
+[data-theme="dark"] a {
+    color: #a8c4c0;
+}
+
+[data-theme="dark"] a:hover {
+    color: #4ec9cb;
+}
+
+
+/* ===============================
+   BUTTONS (BOOTSTRAP FIX)
+   =============================== */
+[data-theme="dark"] .btn-primary {
+    background: #116466;
+    border: none;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+    background: #4ec9cb;
+    color: #0a0f0e;
+}
+
+
+/* =====================================
+   🌙 THEME BUTTON (EXACT USER COPY)
+   ===================================== */
+
+.theme-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #116466;
+    background: transparent;
+    color: #116466;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+/* hover */
+/* LIGHT MODE ONLY */
+body:not([data-theme="dark"]) .theme-btn:hover {
+    background: #116466;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+/* click */
+.theme-btn:active {
+    transform: scale(0.95);
+}
+
+/* icon */
+.theme-btn i {
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+
+
+/* DARK MODE BUTTON */
+[data-theme="dark"] .theme-btn {
+    color: #116466;                       /* ✅ primary color */
+    border-color: #116466;                
+    background: transparent;
+}
+
+[data-theme="dark"] .theme-btn:hover {
+    background: transparent !important;   /* 🚫 kill fill */
+    color: #116466 !important;            /* ✅ force primary */
+    border-color: #116466 !important;
+    box-shadow: none !important;
+}
+
+/* ===============================
+   ALIGNMENT FIX
+   =============================== */
+.admin-topbar {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-topbar .theme-btn {
+    margin-left: auto;
+}
+
+
+/* ===============================
+   SCROLLBAR (OPTIONAL)
+   =============================== */
+[data-theme="dark"] ::-webkit-scrollbar {
+    width: 6px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #4ec9cb;
+    border-radius: 10px;
+}
+
+
+
+
+/* =====================================
+   🔥 DASHBOARD TABLE DARK FIX (IMPORTANT)
+   ===================================== */
+
+/* Table container */
+[data-theme="dark"] .admin-table {
+    background: #1c2c2a !important;
+    color: #ddecea !important;
+    border: 1px solid rgba(78,201,203,0.2);
+}
+
+/* Table */
+[data-theme="dark"] .admin-table table {
+    background: transparent !important;
+    color: #ddecea !important;
+}
+
+/* Table head */
+[data-theme="dark"] .admin-table thead {
+    background: linear-gradient(135deg, #116466, #0a4d40) !important;
+}
+
+/* Table cells */
+[data-theme="dark"] .admin-table th,
+[data-theme="dark"] .admin-table td {
+    color: #ddecea !important;
+    border-color: rgba(78,201,203,0.15) !important;
+}
+
+/* Table rows */
+[data-theme="dark"] .admin-table tbody tr {
+    background: transparent !important;
+}
+
+/* Hover */
+[data-theme="dark"] .admin-table tbody tr:hover {
+    background: rgba(78,201,203,0.08) !important;
+}
+
+/* Bootstrap override */
+[data-theme="dark"] .table {
+    background: transparent !important;
+    color: #ddecea !important;
+}
+
+/* Remove white strip issue */
+[data-theme="dark"] .table-bordered {
+    border-color: rgba(78,201,203,0.2) !important;
+}
+
+/* ===============================
+   🔥 PREMIUM TOPBAR (DARK)
+   =============================== */
+[data-theme="dark"] .admin-topbar {
+    background: linear-gradient(135deg, #0f1a19, #0c1514);
+    border: 1px solid rgba(78,201,203,0.15);
+    box-shadow: 
+        0 4px 20px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.03);
+
+    border-radius: 14px;
+}
+
+/* title glow */
+[data-theme="dark"] .admin-topbar h4 {
+    color: #4ec9cb !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
+    text-shadow: 0 0 10px rgba(78,201,203,0.25);
+}
+
+/* ===============================
+   🔥 STATS FIX
+   =============================== */
+[data-theme="dark"] .admin-card h3 {
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+/* optional: label softer */
+[data-theme="dark"] .admin-card p {
+    color: #a8c4c0 !important;
+}
+
+[data-theme="dark"] .admin-card:hover {
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(78,201,203,0.2);
+}
+
+
+/* ===============================
+   🎯 ACTION CARD TITLE FIX
+   =============================== */
+[data-theme="dark"] .card-link .admin-card h4 {
+    color: #ffffff !important;
+}
+
+/* optional: keep description slightly dim */
+[data-theme="dark"] .card-link .admin-card p {
+    color: #a8c4c0;
+}
+
+/* ===============================
+   🚫 DISABLE GRAY TEXT ON HOVER
+   =============================== */
+
+/* Keep text color stable */
+[data-theme="dark"] .table-hover tbody tr:hover td,
+[data-theme="dark"] .table-hover tbody tr:hover th {
+    color: #ddecea !important;
+}
+
+/* Also fix Bootstrap override */
+[data-theme="dark"] .table-hover tbody tr:hover {
+    color: inherit !important;
+}
+
+
+/* ===============================
+   🔥 HEADING HIGHLIGHT FIX
+   =============================== */
+
+/* Page titles (Edit Blogs) */
+[data-theme="dark"] h2,
+[data-theme="dark"] h4.text-primary {
+    color: #4ec9cb !important;
+    text-shadow: 0 0 10px rgba(78, 201, 203, 0.25);
+}
+
+/* Section titles (All Blogs) */
+[data-theme="dark"] .card h5 {
+    color: #ffffff !important;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+
+/* ===============================
+   🔥 PAGE TITLE FIX
+   =============================== */
+
+[data-theme="dark"] h2.text-primary {
+    color: #4ec9cb !important;
+    text-shadow: 0 0 10px rgba(78, 201, 203, 0.25);
+}
+
+
+
+/* ===============================
+   PROJECT PAGE DARK MODE FIX
+   =============================== */
+
+/* FORM WRAPPER */
+[data-theme="dark"] .project-wrapper,
+[data-theme="dark"] .project-left,
+[data-theme="dark"] .project-right {
+    background: transparent !important;
+}
+
+/* INPUTS + SELECT + TEXTAREA */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background: #1c2c2a !important;
+    color: #e6f5f3 !important;
+    border: 1px solid rgba(78, 201, 203, 0.3) !important;
+}
+
+/* PLACEHOLDER */
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: #9ccfcb !important;
+}
+
+/* LABELS + TEXT */
+[data-theme="dark"] label,
+[data-theme="dark"] .division-text,
+[data-theme="dark"] .checkbox-wrapper {
+    color: #bfeeee !important;
+}
+
+/* SELECT FIX */
+[data-theme="dark"] select {
+    background: #1c2c2a !important;
+    color: #e6f5f3 !important;
+}
+
+/* IMAGE UPLOAD BOX */
+[data-theme="dark"] .image-upload-box {
+    background: rgba(28, 44, 42, 0.7);
+    border: 2px dashed #4ec9cb !important;
+    color: #bfeeee;
+}
+
+[data-theme="dark"] .plus-icon {
+    color: #4ec9cb;
+}
+
+/* PRICE ROW */
+[data-theme="dark"] .price-row input,
+[data-theme="dark"] .price-row select {
+    background: #1c2c2a !important;
+}
+
+/* CHECKBOX + SWITCH */
+[data-theme="dark"] input[type="checkbox"] {
+    accent-color: #4ec9cb;
+}
+
+[data-theme="dark"] .slider {
+    background: #2f4f4f;
+}
+
+[data-theme="dark"] .slider:before {
+    background: #4ec9cb;
+}
+
+/* HEADING FIX */
+[data-theme="dark"] .admin-table h3 {
+    color: #4ec9cb !important;
+}
+
+
+
+/* ===============================
+   SIDEBAR LOGO FIX
+   =============================== */
+
+/* "Web" should ALWAYS stay white */
+.admin-sidebar h2 {
+    color: #ffffff !important;
+}
+
+/* "Ryx" should follow theme accent */
+.admin-sidebar h2 .text-secondary {
+    color: var(--bs-secondary) !important;
+}
+
+/* DARK MODE - keep Web white */
+[data-theme="dark"] .admin-sidebar h2 {
+    color: #ffffff !important;
+}
+
+/* DARK MODE - Ryx gets brighter accent */
+[data-theme="dark"] .admin-sidebar h2 .text-secondary {
+    color: #4ec9cb !important;
+}
+
+
+
+
+/* ===============================
+   UPDATE PROJECT POPUP DARK FIX
+   =============================== */
+
+/* overlay */
+[data-theme="dark"] .form-popup {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* popup box */
+[data-theme="dark"] .form-popup-content {
+    background: linear-gradient(135deg, #1c2c2a, #162220) !important;
+    color: #e6f5f3 !important;
+    border: 1px solid rgba(78, 201, 203, 0.2);
+}
+
+/* heading */
+[data-theme="dark"] .form-popup-content h3 {
+    color: #4ec9cb !important;
+}
+
+/* inner form container */
+[data-theme="dark"] .form-popup-content .project-wrapper {
+    background: transparent !important;
+}
+
+/* inputs inside popup */
+[data-theme="dark"] .form-popup-content input,
+[data-theme="dark"] .form-popup-content select {
+    background: #1c2c2a !important;
+    color: #e6f5f3 !important;
+    border: 1px solid rgba(78, 201, 203, 0.3) !important;
+}
+
+/* placeholder */
+[data-theme="dark"] .form-popup-content input::placeholder {
+    color: #9ccfcb !important;
+}
+
+/* close button */
+[data-theme="dark"] .close-btn {
+    color: #4ec9cb !important;
+}
+
+/* image cards */
+[data-theme="dark"] .image-card {
+    background: #1c2c2a;
+    border: 1px solid rgba(78, 201, 203, 0.2);
+}
+
+/* add image box */
+[data-theme="dark"] .add-image {
+    border: 2px dashed #4ec9cb !important;
+    color: #4ec9cb;
+}
+
+
+
+
+/* ===============================
+   FIX WHITE UPLOAD BOX (FINAL)
+   =============================== */
+
+/* upload empty box */
+[data-theme="dark"] .add-image {
+    background: #1c2c2a !important;
+    border: 2px dashed #4ec9cb !important;
+    color: #4ec9cb !important;
+}
+
+/* "+" icon inside */
+[data-theme="dark"] .add-image::before,
+[data-theme="dark"] .add-image {
+    color: #4ec9cb !important;
+}
+
+/* fallback if using image-upload-box */
+[data-theme="dark"] .image-upload-box {
+    background: #1c2c2a !important;
+    border: 2px dashed #4ec9cb !important;
+    color: #4ec9cb !important;
+}
+
+/* text inside upload box */
+[data-theme="dark"] .image-upload-box p {
+    color: #9ccfcb !important;
+}
+
+
+
+/* ===============================
+   FIX ADMIN BUTTON VISIBILITY
+   =============================== */
+
+[data-theme="dark"] .admin-btn {
+    background: linear-gradient(135deg, #116466, #0d4444) !important;
+    color: #ffffff !important;
+    border: none !important;
+    opacity: 1 !important;            /* 🔥 removes faded look */
+}
+
+/* hover */
+[data-theme="dark"] .admin-btn:hover {
+    background: linear-gradient(135deg, #4ec9cb, #116466) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+/* FIX: anchor buttons specifically */
+[data-theme="dark"] a.admin-btn {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+
+
+/* ===============================
+   CONTACT PAGE PREMIUM DARK UI
+   =============================== */
+
+/* CARD */
+[data-theme="dark"] .card {
+    background: linear-gradient(145deg, #132524, #0f1f1e) !important;
+    border: 1px solid rgba(78, 201, 203, 0.15) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4) !important;
+}
+
+/* MESSAGE ROW */
+[data-theme="dark"] .message-row {
+    border-bottom: 1px solid rgba(78, 201, 203, 0.12) !important;
+    padding: 16px 20px;
+    transition: all 0.25s ease;
+}
+
+/* HOVER EFFECT */
+[data-theme="dark"] .message-row:hover {
+    background: rgba(78, 201, 203, 0.08) !important;
+    transform: translateX(6px);
+}
+
+/* NAME */
+[data-theme="dark"] .message-name {
+    color: #4ec9cb !important;
+    font-weight: 600;
+}
+
+/* SUBJECT */
+[data-theme="dark"] .message-subject {
+    color: #cfeeee !important;
+    font-weight: 500;
+}
+
+/* DATE */
+[data-theme="dark"] .message-date {
+    color: #9ccfcb !important;
+}
+
+/* GRID SPACING */
+[data-theme="dark"] .message-content {
+    grid-template-columns: 1.2fr 2fr 1fr;
+    gap: 10px;
+}
+
+/* LOADING / EMPTY TEXT */
+[data-theme="dark"] #messagesList {
+    color: #cfeeee;
+}
+
+
+
+/* ===============================
+   FIX CONTACT HOVER OVERFLOW
+   =============================== */
+
+/* parent card must clip children */
+[data-theme="dark"] .card {
+    overflow: hidden !important;
+    border-radius: 16px !important;
+}
+
+/* row hover should respect border */
+[data-theme="dark"] .message-row {
+    position: relative;
+}
+
+/* FIX hover background */
+[data-theme="dark"] .message-row:hover {
+    background: rgba(78, 201, 203, 0.08) !important;
+    transform: none; /* ❌ remove shift (this was breaking edges) */
+}
+
+/* OPTIONAL: smoother effect */
+[data-theme="dark"] .message-row {
+    transition: background 0.25s ease;
+}
+
+
+
+
+
+
+
+/* ===============================
+   SIDEBAR TEXT FIX (DARK MODE)
+   =============================== */
+
+[data-theme="dark"] .admin-sidebar {
+    background: #0f1f1d !important;
+}
+
+/* FORCE TEXT WHITE */
+[data-theme="dark"] .admin-sidebar ul li a {
+    color: #ffffff !important;
+}
+
+/* ICON COLOR */
+[data-theme="dark"] .admin-sidebar ul li a i {
+    color: #ffffff !important;
+}
+
+/* HOVER */
+[data-theme="dark"] .admin-sidebar ul li a:hover {
+    background: rgba(78, 201, 203, 0.15) !important;
+    color: #4ec9cb !important;
+}
+
+/* ACTIVE */
+[data-theme="dark"] .admin-sidebar ul li.active a {
+    background: rgba(78, 201, 203, 0.25) !important;
+    color: #4ec9cb !important;
+}
+
+/* LOGO FIX */
+[data-theme="dark"] .admin-sidebar h2 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .admin-sidebar h2 .text-secondary {
+    color: #4ec9cb !important;
+}
+
+
+
+
+/* FIX ACTION CARD ICON COLOR */
+[data-theme="dark"] .admin-card i {
+    color: #4ec9cb !important;
+}
+
+/* ===============================
+   🔙 BACK HOME BUTTON (DARK MODE)
+   =============================== */
+
+[data-theme="dark"] .back-home-btn {
+    background: transparent;
+    border: 2px solid #4ec9cb;
+    color: #4ec9cb;
+}
+
+/* hover */
+[data-theme="dark"] .back-home-btn:hover {
+    
+    color: #0f1a19;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(78, 201, 203, 0.4);
+}
+
+

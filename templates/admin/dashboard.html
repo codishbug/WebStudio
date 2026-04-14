@@ -1,0 +1,141 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+
+        <!-- STATS (UNCHANGED DESIGN) -->
+        <div class="row g-4 mt-2">
+
+            <div class="col-md-3 wow fadeInUp">
+                <div class="admin-card">
+                    <i class="fa fa-blog"></i>
+                    <h3 id="totalBlogs">0</h3>
+                    <p>Total Blogs</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 wow fadeInUp">
+                <div class="admin-card">
+                    <i class="fa fa-project-diagram"></i>
+                    <h3>{{ total_projects }}</h3>
+                    <p>Projects</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 wow fadeInUp">
+                <div class="admin-card">
+                    <i class="fa fa-users"></i>
+                    <h3 id="totalUsers">0</h3>
+                    <p>Users</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 wow fadeInUp">
+                <div class="admin-card">
+                    <i class="fa fa-envelope"></i>
+                    <h3 id="totalMessages">0</h3>
+                    <p>Messages</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- RECENT BLOG TABLE -->
+        <div class="admin-table wow fadeInUp mt-5">
+            <h5 class="text-secondary mb-4">Recent Blog Posts</h5>
+
+            <table class="table table-bordered">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Read Time</th>
+                    </tr>
+                </thead>
+
+                <tbody id="recentBlogs">
+                    <!-- dynamic -->
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script>
+
+
+// SUPABASE CLIENT
+const supabaseClient = supabase.createClient(
+    "https://yuuvbsctwcrzubblkjlq.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXZic2N0d2NyenViYmxramxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3ODIzNjYsImV4cCI6MjA4NjM1ODM2Nn0.2js6OF_T1oBECrSHJVgSF7_H5KYTpWqdQAGjgs5dVUs"
+);
+
+async function loadDashboard() {
+
+const { count, error } = await supabaseClient
+    .from("users")
+    .select("*", { count: "exact", head: true });
+
+document.getElementById("totalUsers").innerText = count || 0;
+
+    // BLOGS COUNT
+    const { data: blogs } = await supabaseClient
+        .from("blogs")
+        .select("*");
+
+    document.getElementById("totalBlogs").innerText = blogs ? blogs.length : 0;
+
+
+
+
+    // CONTACT MESSAGES COUNT
+    const { data: messages } = await supabaseClient
+        .from("contact_messages")
+        .select("*");
+
+    document.getElementById("totalMessages").innerText = messages ? messages.length : 0;
+
+
+    // ===== RECENT BLOGS TABLE =====
+    const recentContainer = document.getElementById("recentBlogs");
+
+    const { data: recentBlogs } = await supabaseClient
+        .from("blogs")
+        .select("*")
+        .order("id", { ascending: false })
+        .limit(5);
+
+    recentContainer.innerHTML = "";
+
+    if (recentBlogs) {
+        recentBlogs.forEach(blog => {
+            recentContainer.innerHTML += `
+                <tr>
+                    <td>${blog.title}</td>
+                    <td>${blog.category}</td>
+                    <td>
+                        <span class="badge bg-${blog.status === "published" ? "success" : "warning"}">
+                            ${blog.status}
+                        </span>
+                    </td>
+                    <td>${blog.read_time} min</td>
+                </tr>
+            `;
+        });
+    }
+}
+
+loadDashboard();
+
+</script>
+
+{% endblock %}

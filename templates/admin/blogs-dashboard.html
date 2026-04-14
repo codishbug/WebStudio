@@ -1,0 +1,175 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Blogs Dashboard{% endblock %}
+{% block page_title %}Blogs Dashboard{% endblock %}
+
+{% block content %}
+
+        <!-- BLOG STATS -->
+        <div class="row g-4 mt-2">
+
+            <div class="col-md-4 wow fadeInUp">
+                <div class="admin-card text-center">
+                    <i class="fa fa-blog"></i>
+                    <h3 id="totalBlogs">0</h3>
+                    <p>Total Blogs</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 wow fadeInUp" data-wow-delay=".2s">
+                <div class="admin-card text-center">
+                    <i class="fa fa-check-circle"></i>
+                    <h3 id="publishedBlogs">0</h3>
+                    <p>Published</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 wow fadeInUp" data-wow-delay=".4s">
+                <div class="admin-card text-center">
+                    <i class="fa fa-pencil-alt"></i>
+                    <h3 id="draftBlogs">0</h3>
+                    <p>Drafts</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- ACTION CARDS -->
+<div class="row g-4 mt-4">
+
+    <div class="col-md-4 wow fadeInUp">
+        <a href="{{ url_for('admin_view_blogs') }}" class="card-link">
+            <div class="admin-card text-center">
+                <i class="fa fa-eye fa-2x mb-3 text-primary"></i>
+                <h4>View Blogs</h4>
+                <p>Browse all blog posts</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 wow fadeInUp" data-wow-delay=".2s">
+        <a href="{{ url_for('admin_edit_blog') }}" class="card-link">
+            <div class="admin-card text-center">
+                <i class="fa fa-edit fa-2x mb-3 text-primary"></i>
+                <h4>Edit Blogs</h4>
+                <p>Update or delete posts</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 wow fadeInUp" data-wow-delay=".4s">
+        <a href="{{ url_for('admin_create_blog') }}" class="card-link">
+            <div class="admin-card text-center">
+                <i class="fa fa-plus fa-2x mb-3 text-primary"></i>
+                <h4>Create Blog</h4>
+                <p>Add a new article</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+
+        <!-- RECENT BLOG TABLE -->
+        <div class="admin-table wow fadeInUp mt-5">
+            <h5 class="text-secondary mb-4">Recent Blog Posts</h5>
+
+            <table class="table table-bordered">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Read Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="recentBlogs">
+                    <!-- Dynamic -->
+                </tbody>
+            </table>
+        </div>
+
+{% endblock %}
+
+
+
+
+
+{% block extra_js %}
+
+<script>
+const supabaseClient = supabase.createClient(
+    "https://yuuvbsctwcrzubblkjlq.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXZic2N0d2NyenViYmxramxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3ODIzNjYsImV4cCI6MjA4NjM1ODM2Nn0.2js6OF_T1oBECrSHJVgSF7_H5KYTpWqdQAGjgs5dVUs"
+);
+
+async function loadBlogDashboard() {
+
+    const { data: blogs, error } = await supabaseClient
+        .from("blogs")
+        .select("*")
+        .order("id", { ascending: false });
+
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    // Stats
+    document.getElementById("totalBlogs").innerText = blogs.length;
+    document.getElementById("publishedBlogs").innerText =
+        blogs.filter(b => b.status === "published").length;
+    document.getElementById("draftBlogs").innerText =
+        blogs.filter(b => b.status === "draft").length;
+
+    // Recent blogs
+    const recentContainer = document.getElementById("recentBlogs");
+    recentContainer.innerHTML = "";
+
+    blogs.slice(0,5).forEach(blog => {
+
+        recentContainer.innerHTML += `
+            <tr>
+                <td>${blog.title}</td>
+                <td>${blog.category}</td>
+                <td>
+                    <span class="badge bg-${blog.status === "published" ? "success" : "warning"}">
+                        ${blog.status}
+                    </span>
+                </td>
+                <td>${blog.read_time} min</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" onclick="deleteBlog(${blog.id})">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+async function deleteBlog(id) {
+
+    if (!confirm("Delete this blog permanently?")) return;
+
+    const { error } = await supabaseClient
+        .from("blogs")
+        .delete()
+        .eq("id", id);
+
+    if (!error) {
+        alert("Blog deleted");
+        loadBlogDashboard();
+    } else {
+        alert("Error deleting blog");
+        console.log(error);
+    }
+}
+
+loadBlogDashboard();
+</script>
+
+{% endblock %}

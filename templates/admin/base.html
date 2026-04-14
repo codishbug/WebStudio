@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <script>
+    (function () {
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    })();
+</script>
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ICONS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- LIBRARIES -->
+    <link href="{{ url_for('static', filename='user/lib/animate/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+    <!-- BOOTSTRAP -->
+    <link href="{{ url_for('static', filename='user/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- MAIN THEME -->
+    <link href="{{ url_for('static', filename='user/css/style.css') }}" rel="stylesheet">
+
+    <!-- ADMIN CSS -->
+     
+    <link href="{{ url_for('static', filename='admin/admin.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='admin/admin-theme.css') }}" rel="stylesheet">
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <!-- SIDEBAR -->
+    {% include "admin/sidebar.html" %}
+
+    <!-- MAIN CONTENT -->
+    <div class="admin-main">
+
+        <!-- TOPBAR -->
+        <div class="admin-topbar d-flex justify-content-between align-items-center wow fadeInDown">
+    
+            <h4 class="text-primary m-0">
+                {% block page_title %}Dashboard{% endblock %}
+            </h4>
+
+            <!-- 🌙 THEME BUTTON -->
+            <button id="themeToggle" class="theme-btn">
+                <i class="fa fa-moon"></i>
+            </button>
+
+        </div>
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='user/lib/wow/wow.min.js') }}"></script>
+<script src="{{ url_for('static', filename='user/lib/easing/easing.min.js') }}"></script>
+<script src="{{ url_for('static', filename='user/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+<script src="{{ url_for('static', filename='user/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='user/js/main.js') }}"></script>
+
+<script>
+    new WOW().init();
+</script>
+
+{% block extra_js %}{% endblock %}
+
+<script>
+    const toggleBtn = document.getElementById("themeToggle");
+    const icon = toggleBtn.querySelector("i");
+
+    toggleBtn.addEventListener("click", () => {
+        let current = document.documentElement.getAttribute("data-theme");
+
+        if (current === "dark") {
+            document.documentElement.setAttribute("data-theme", "light");
+            localStorage.setItem("theme", "light");
+
+            // 🌙 icon
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+
+            // ☀️ icon
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+        }
+    });
+</script>
+
+</body>
+</html>

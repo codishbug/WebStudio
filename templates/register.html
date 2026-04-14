@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — WebRyx</title>
+
+<style>
+
+:root{
+--bs-primary:#116466;
+--bs-secondary:#4ec9cb;
+--bs-dark:#2C3531;
+--bs-white:#ffffff;
+--bs-light:#e9f5f4;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(-45deg,#116466,#4ec9cb,#2C3531,#4ec9cb);
+background-size:400% 400%;
+animation:gradientBG 12s ease infinite;
+}
+
+@keyframes gradientBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* Card */
+
+.register-card{
+width:400px;
+background:rgba(255,255,255,0.96);
+padding:40px;
+border-radius:16px;
+box-shadow:0 20px 50px rgba(0,0,0,0.25);
+animation:fadeIn 0.7s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;}
+}
+
+.title{
+text-align:center;
+margin-bottom:25px;
+font-size:26px;
+font-weight:600;
+color:var(--bs-dark);
+}
+
+/* Flash messages */
+.alert{
+padding:10px 14px;
+border-radius:8px;
+margin-bottom:14px;
+font-size:14px;
+text-align:center;
+}
+.alert.error,.alert.danger{
+background:#fde8e8;
+color:#9b1c1c;
+border:1px solid #f8b4b4;
+}
+.alert.success{
+background:#def7ec;
+color:#03543f;
+border:1px solid #84e1bc;
+}
+.alert.warning{
+background:#fdf6b2;
+color:#723b13;
+border:1px solid #faca15;
+}
+
+/* Floating Inputs */
+
+.input-box{
+position:relative;
+margin-bottom:20px;
+}
+
+.input-box input{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+outline:none;
+background:var(--bs-light);
+font-size:14px;
+transition:border-color 0.2s;
+}
+
+.input-box input:focus{
+border-color:var(--bs-primary);
+}
+
+.input-box label{
+position:absolute;
+top:12px;
+left:12px;
+font-size:14px;
+color:#777;
+transition:0.3s;
+pointer-events:none;
+}
+
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label{
+top:-8px;
+left:10px;
+background:white;
+padding:0 4px;
+font-size:12px;
+color:var(--bs-primary);
+}
+
+/* Password strength */
+
+.strength{
+height:6px;
+border-radius:6px;
+margin-top:6px;
+background:#ddd;
+overflow:hidden;
+}
+
+.strength span{
+display:block;
+height:100%;
+width:0%;
+background:red;
+transition:0.4s;
+}
+
+/* Button */
+
+.register-btn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:var(--bs-primary);
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.register-btn:hover{
+background:var(--bs-dark);
+}
+
+.register-btn:disabled{
+opacity:0.7;
+cursor:not-allowed;
+}
+
+/* bottom text */
+
+.bottom{
+text-align:center;
+margin-top:18px;
+font-size:14px;
+}
+
+.bottom a{
+color:var(--bs-primary);
+text-decoration:none;
+font-weight:500;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="register-card">
+
+  <div class="title">Create Account</div>
+
+  <!-- Flask flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <form action="/register" method="POST">
+
+    <div class="input-box">
+      <input type="text" name="username" required placeholder=" ">
+      <label>Username</label>
+    </div>
+
+    <div class="input-box">
+      <input type="email" name="email" required placeholder=" ">
+      <label>Email</label>
+    </div>
+
+    <div class="input-box">
+      <input type="password" id="password" name="password" required placeholder=" ">
+      <label>Password</label>
+      <div class="strength">
+        <span id="strength-bar"></span>
+      </div>
+    </div>
+
+    <button class="register-btn" id="register-btn">Register</button>
+
+  </form>
+
+  <div class="bottom">
+    Already have an account? <a href="/login">Login</a>
+  </div>
+
+</div>
+
+<script>
+
+/* Password Strength */
+const password = document.getElementById("password");
+const bar      = document.getElementById("strength-bar");
+
+password.addEventListener("input", function () {
+  const val = password.value.length;
+  if (val < 4) {
+    bar.style.width      = "25%";
+    bar.style.background = "red";
+  } else if (val < 8) {
+    bar.style.width      = "60%";
+    bar.style.background = "orange";
+  } else {
+    bar.style.width      = "100%";
+    bar.style.background = "green";
+  }
+});
+
+/* Disable button on submit to prevent double clicks */
+document.querySelector("form").addEventListener("submit", function () {
+  const btn       = document.getElementById("register-btn");
+  btn.textContent = "Registering…";
+  btn.disabled    = true;
+});
+
+</script>
+
+</body>
+</html>

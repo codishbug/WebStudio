@@ -1,0 +1,767 @@
+/* ================================================
+   WEBRYX DARK MODE — dark-mode.css
+   Place in: static/user/css/dark-mode.css
+   Link AFTER style.css in every HTML file:
+   <link href="...dark-mode.css" rel="stylesheet">
+   ================================================ */
+
+
+/* ── VARIABLES ── */
+[data-theme="dark"] {
+    --bs-primary:   #116466;
+    --bs-secondary: #2da8ab;
+    --bs-dark:      #0a0f0e;
+    --bs-white:     #1c2422;
+    --bs-light:     #1a2322;
+    --text-main:    #ddecea;
+}
+
+/* ── BASE ── */
+[data-theme="dark"] body {
+    background-color: #111918;
+    color: #ddecea;
+}
+
+/* KEEP NAVBAR SAME IN DARK MODE */
+[data-theme="dark"] .navbar,
+[data-theme="dark"] .navbar-wrapper {
+    background-color: #2C3531 !important;
+}
+
+/* KEEP NAVBAR TEXT SAME */
+[data-theme="dark"] .navbar .nav-link {
+    color: white !important;
+}
+
+/* KEEP CAROUSEL SAME */
+[data-theme="dark"] .carousel-item::after {
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+
+
+/* 🚫 DO NOT APPLY DARK MODE TO CAROUSEL ARROWS */
+[data-theme="dark"] .carousel-control-prev,
+[data-theme="dark"] .carousel-control-next {
+    background: var(--bs-primary) !important;
+}
+
+/* Reset icon color (remove dark filter effect) */
+[data-theme="dark"] .carousel-control-prev-icon,
+[data-theme="dark"] .carousel-control-next-icon {
+    filter: none !important;
+}
+
+/* ── SPINNER ── */
+[data-theme="dark"] #spinner {
+    background-color: #111918;
+}
+
+/* ── FACT BAR ── */
+[data-theme="dark"] .fact-section {
+    background-color: #0d4647 !important;
+}
+
+/* ── ABOUT SECTION ── */
+[data-theme="dark"] .container-fluid.py-3 {
+    background-color: #111918;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    color: #ddecea;
+}
+
+[data-theme="dark"] p {
+    color: #a8c4c0;
+}
+
+/* ── SERVICES ── */
+[data-theme="dark"] .services {
+    background-color: #111918;
+}
+
+[data-theme="dark"] .services-item,
+[data-theme="dark"] .services-item.bg-light {
+    background-color: #1c2c2a !important;
+    box-shadow: 0 0 40px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .services-item h4,
+[data-theme="dark"] .services-item p {
+    color: #ddecea;
+}
+
+/* =========================================
+   🔥 FIX SERVICES HOVER TEXT (DARK MODE)
+   ========================================= */
+
+/* Keep text readable on hover */
+[data-theme="dark"] .services-item:hover .services-content-icon h4,
+[data-theme="dark"] .services-item:hover .services-content-icon p {
+    color: #ddecea !important;  /* same as normal */
+}
+
+/* Optional: fix icon color too */
+[data-theme="dark"] .services-item:hover .services-content-icon i {
+    color: #4ec9cb !important;
+}
+
+/* ── PROJECT ── */
+[data-theme="dark"] .project {
+    background-color: #111918;
+}
+
+[data-theme="dark"] .project h1 {
+    color: #ddecea;
+}
+
+/* ── BLOG ── */
+[data-theme="dark"] .blog {
+    background-color: #111918;
+}
+
+[data-theme="dark"] .blog-item {
+    background-color: #1c2c2a;
+    border-color: #4ec9cb !important;
+}
+
+[data-theme="dark"] .blog-item h4,
+[data-theme="dark"] .blog-item p,
+[data-theme="dark"] .blog-item span,
+[data-theme="dark"] .blog-content p,
+[data-theme="dark"] .blog-content h4,
+[data-theme="dark"] .blog-content span {
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .blog-details-section {
+    background: #111918 !important;
+}
+
+[data-theme="dark"] .blog-article-card {
+    background-color: #1c2c2a !important;
+    color: #ddecea;
+}
+
+[data-theme="dark"] .blog-title {
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .blog-lead,
+[data-theme="dark"] .blog-article-card p {
+    color: #a8c4c0 !important;
+}
+
+[data-theme="dark"] .blog-highlight {
+    background: #1a3230;
+    border-left-color: #4ec9cb;
+    color: #ddecea;
+}
+
+[data-theme="dark"] .blog-cta {
+    background: #163230 !important;
+    border-color: #4ec9cb !important;
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .blog-cta h5 {
+    color: #4ec9cb !important;
+}
+
+[data-theme="dark"] .blog-emphasis {
+    color: #ddecea;
+}
+
+[data-theme="dark"] .blog-quote-inline {
+    color: #ddecea;
+}
+
+/* ── TEAM ── */
+[data-theme="dark"] .team {
+    background-color: #111918;
+}
+
+[data-theme="dark"] .team-item {
+    background: rgba(28, 44, 42, 0.95) !important;
+}
+
+[data-theme="dark"] .team-item h4,
+[data-theme="dark"] .team-item p {
+    color: #ddecea;
+}
+
+[data-theme="dark"] .team-img {
+    border-color: #1c2c2a;
+}
+
+/* ── TESTIMONIAL ── */
+[data-theme="dark"] .testimonial {
+    background-color: #111918;
+}
+
+[data-theme="dark"] .testimonial-item {
+    background: #1c2c2a !important;
+    border-color: #2d4340 !important;
+}
+
+[data-theme="dark"] .testimonial-item p {
+    color: #a8c4c0;
+}
+
+[data-theme="dark"] .testimonial-carousel .owl-item.center .testimonial-item {
+    background: #223330 !important;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+[data-theme="dark"] .testimonial-carousel .owl-dot {
+    background: #2d4340;
+}
+
+/* ── CONTACT ── */
+[data-theme="dark"] .contact-detail::before {
+    background: linear-gradient(rgba(17,25,24,0.97), rgba(17,25,24,0.85)),
+                url(../img/background.jpg) center center no-repeat;
+}
+
+[data-theme="dark"] .contact-detail .bg-light {
+    background-color: #1c2c2a !important;
+}
+
+[data-theme="dark"] .contact-detail h4 {
+    color: #ddecea;
+}
+
+[data-theme="dark"] .contact-detail a.h5 {
+    color: #a8c4c0;
+}
+
+[data-theme="dark"] .contact-form input,
+[data-theme="dark"] .contact-form textarea {
+    background-color: #ffffff !important;   /* ✅ WHITE */
+    color: #2C3531 !important;              /* dark text */
+    border: 1px solid #4ec9cb !important;   /* accent border */
+}
+
+[data-theme="dark"] .contact-form input::placeholder,
+[data-theme="dark"] .contact-form textarea::placeholder {
+    color: #6a9490;
+}
+
+/* ── FAQ ── */
+[data-theme="dark"] .faq-section {
+    background: #111918 !important;
+}
+
+[data-theme="dark"] .faq-item {
+    background: #1c2c2a !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] .faq-question {
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .faq-answer {
+    color: #a8c4c0 !important;
+}
+
+/* ── WHY CHOOSE US CARDS ── */
+[data-theme="dark"] .wcu-card {
+    background-color: #1c2c2a !important;
+    border-color: rgba(78, 201, 203, 0.2);
+}
+
+[data-theme="dark"] .wcu-card h5 {
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .wcu-card p {
+    color: #8ab5b0 !important;
+}
+
+[data-theme="dark"] .wcu-icon {
+    background: #162220;
+}
+
+/* ── PROJECT DETAILS ── */
+[data-theme="dark"] .project-content {
+    background-color: #1c2c2a !important;
+    color: #ddecea;
+}
+
+[data-theme="dark"] .purchase-card {
+    background-color: #1c2c2a !important;
+    color: #ddecea;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .purchase-card h5,
+[data-theme="dark"] .purchase-card p,
+[data-theme="dark"] .purchase-card li {
+    color: #ddecea;
+}
+
+/* ── CHATBOT ── */
+[data-theme="dark"] .chatbot-popup {
+    background: #1c2c2a !important;
+    border-color: rgba(78,201,203,0.2);
+}
+
+[data-theme="dark"] .chat-body {
+    background: #141e1d !important;
+}
+
+[data-theme="dark"] .bot-message {
+    background: #1c2c2a !important;
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .chat-button {
+    background: #1c2c2a !important;
+    border-color: rgba(78,201,203,0.3) !important;
+    color: #4ec9cb !important;
+}
+
+[data-theme="dark"] .chat-footer-note {
+    background: #1c2c2a !important;
+    color: #6a9490 !important;
+    border-top-color: #2d4340 !important;
+}
+
+/* ── MODAL ── */
+[data-theme="dark"] .modal-content {
+    background: #1c2c2a !important;
+    color: #ddecea;
+}
+
+[data-theme="dark"] .close {
+    color: #ddecea;
+}
+
+/* ── FOOTER ── */
+[data-theme="dark"] .footer.bg-dark,
+[data-theme="dark"] footer {
+    background-color: #070c0b !important;
+}
+
+[data-theme="dark"] .footer hr {
+    border-color: #2d4340 !important;
+    opacity: 0.5;
+}
+
+/* ── BACK TO TOP ── */
+[data-theme="dark"] .back-to-top {
+    background-color: #4ec9cb !important;
+}
+
+/* ── LINKS ── */
+[data-theme="dark"] a {
+    color: #a8c4c0;
+}
+
+[data-theme="dark"] a:hover {
+    color: #4ec9cb;
+}
+
+/* ── BOOTSTRAP OVERRIDES in dark mode ── */
+[data-theme="dark"] .bg-light {
+    background-color: #1c2c2a !important;
+}
+
+[data-theme="dark"] .text-dark {
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .border-primary {
+    border-color: #4ec9cb !important;
+}
+
+[data-theme="dark"] .border-bottom.border-primary {
+    border-color: #2d4340 !important;
+}
+
+/* ── THEME TOGGLE BUTTON ── */
+#themeToggle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid rgba(78, 201, 203, 0.5);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+#themeToggle:hover {
+    background: rgba(78, 201, 203, 0.15);
+    border-color: #4ec9cb;
+    transform: rotate(20deg);
+}
+
+#themeToggle i {
+    font-size: 15px;
+    transition: transform 0.3s ease;
+}
+
+[data-theme="dark"] #themeToggle {
+    border-color: rgba(78, 201, 203, 0.6);
+    color: #4ec9cb;
+}
+
+
+/* =========================================
+   🔒 LOCK CAROUSEL IMAGE (NO COLOR CHANGE)
+   ========================================= */
+
+/* Remove any dark-mode effect on image */
+[data-theme="dark"] .carousel-item img {
+    filter: blur(1.2px) !important; /* keep SAME as light */
+    opacity: 1 !important;
+}
+
+/* FIX overlay EXACTLY SAME as light */
+[data-theme="dark"] .carousel-item::after {
+    background: linear-gradient(
+        rgba(0,0,0,0.78),
+        rgba(0,0,0,0.65)
+    ) !important;
+}
+
+/* VERY IMPORTANT: stop global dark tint */
+[data-theme="dark"] .carousel-item {
+    filter: none !important;
+}
+
+/* If any parent is affecting brightness */
+[data-theme="dark"] .carousel,
+[data-theme="dark"] .carousel-inner {
+    filter: none !important;
+    background: transparent !important;
+}
+
+
+/* =========================================
+   🔥 FIX PROJECT OVERLAY TEXT VISIBILITY
+   ========================================= */
+
+/* Force readable text inside overlay */
+[data-theme="dark"] .project-overlay h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .project-overlay p {
+    color: #cfeeed !important;
+}
+
+/* Improve overlay background contrast */
+[data-theme="dark"] .project-overlay {
+    background: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Improve button card */
+[data-theme="dark"] .project-overlay a {
+    background: #116466 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(78,201,203,0.4);
+}
+
+
+
+/* =========================================
+   🔥 FIX BLOG CARD (DARK MODE CONTRAST)
+   ========================================= */
+
+/* Card background */
+[data-theme="dark"] .blog-item {
+    background: #1a2a29 !important;
+    border: 1px solid rgba(78,201,203,0.25) !important;
+}
+
+/* Title */
+[data-theme="dark"] .blog-item h4 {
+    color: #ffffff !important;
+}
+
+/* Description */
+[data-theme="dark"] .blog-item p {
+    color: #b8d6d2 !important;
+}
+
+/* Category badge (top label like Business Growth) */
+[data-theme="dark"] .blog-item .blog-category {
+    background: #116466 !important;
+    color: #ffffff !important;
+}
+
+/* Read More button FIX */
+[data-theme="dark"] .blog-item .btn {
+    background: #4ec9cb !important;
+    color: #0a0f0e !important;
+    border: none !important;
+}
+
+/* Button hover (premium feel) */
+[data-theme="dark"] .blog-item .btn:hover {
+    background: #ffffff !important;
+    color: #116466 !important;
+    transform: translateY(-2px);
+}
+
+/* Improve spacing visibility */
+[data-theme="dark"] .blog-content {
+    background: transparent !important;
+}
+
+
+/* =========================================
+   🔥 CONTACT FORM FIX (DARK MODE)
+   ========================================= */
+
+[data-theme="dark"] .contact-form {
+    background: var(--bs-primary) !important;
+}
+
+
+
+/* Placeholder */
+[data-theme="dark"] .contact-form input::placeholder,
+[data-theme="dark"] .contact-form textarea::placeholder {
+    color: #6a9490 !important;
+}
+
+/* Autofill fix (IMPORTANT for your email field) */
+/* FIX AUTOFILL — KEEP WHITE */
+[data-theme="dark"] .contact-form input:-webkit-autofill,
+[data-theme="dark"] .contact-form textarea:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important; /* white bg */
+    -webkit-text-fill-color: #2C3531 !important;               /* dark text */
+    border: 1px solid #4ec9cb !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* =========================================
+   🔥 BUTTON FIX (PRIMARY STYLE)
+   ========================================= */
+
+[data-theme="dark"] .contact-form .btn {
+    background: #4ec9cb !important;   /* PRIMARY */
+    color: #ffffff !important;
+    border: none !important;
+    font-weight: 600;
+}
+
+/* Hover */
+[data-theme="dark"] .contact-form .btn:hover {
+    background: #4ec9cb!important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   🔥 HOW IT WORKS (DARK MODE FIX)
+   ========================================= */
+
+/* Section background */
+[data-theme="dark"] .hiw-section {
+    background-color: #111918 !important;
+}
+
+/* Card */
+[data-theme="dark"] .hiw-card {
+    background: #1c2c2a !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 1px solid rgba(78,201,203,0.2);
+}
+
+/* Step number */
+[data-theme="dark"] .hiw-step {
+    color: #4ec9cb !important;
+}
+
+/* Icon */
+[data-theme="dark"] .hiw-icon {
+    background: #162220;
+    color: #4ec9cb !important;
+}
+
+/* Text */
+[data-theme="dark"] .hiw-card h5 {
+    color: #ddecea !important;
+}
+
+[data-theme="dark"] .hiw-card p {
+    color: #a8c4c0 !important;
+}
+
+/* Connector line */
+[data-theme="dark"] .hiw-connector {
+    background: rgba(78,201,203,0.2) !important;
+}
+
+
+
+/* ===============================
+   DARK MODE FIX
+   =============================== */
+
+[data-theme="dark"] body {
+    background: #111918 !important;
+}
+
+[data-theme="dark"] .admin-blog-card {
+    background: #1c2c2a !important;
+    color: #ddecea !important;
+    border: 1px solid rgba(78, 201, 203, 0.2);
+}
+
+/* inputs stay white (already your theme rule, but safe) */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    background: #ffffff !important;
+    color: #2C3531 !important;
+}
+
+
+
+/* ===============================
+   🔥 PROJECT BUTTON FIX (DARK MODE)
+   =============================== */
+
+/* LIVE PREVIEW */
+[data-theme="dark"] .purchase-card .btn-primary {
+    background: linear-gradient(135deg, #4ec9cb, #2da8ab) !important;
+    color: #0a0f0e !important;
+    border: none !important;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .purchase-card .btn-primary:hover {
+    background: #ffffff !important;
+    color: #116466 !important;
+    transform: translateY(-2px);
+}
+
+/* DOWNLOAD BUTTON */
+[data-theme="dark"] .purchase-card .btn-dark {
+    background: #1c2c2a !important;   /* NOT black */
+    color: #4ec9cb !important;        /* teal text */
+    border: 1px solid rgba(78,201,203,0.4) !important;
+    font-weight: 600;
+}
+
+[data-theme="dark"] .purchase-card .btn-dark:hover {
+    background: #4ec9cb !important;
+    color: #0a0f0e !important;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   🔥 LOGOUT BUTTON — KEEP SAME AS LIGHT MODE
+   ========================================= */
+
+[data-theme="dark"] .theme-auth-btn {
+    border: 2px solid rgba(78, 201, 203, 0.5) !important;
+    background: transparent !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .theme-auth-btn i,
+[data-theme="dark"] .theme-auth-btn span {
+    color: #ffffff !important;
+}
+
+/* hover SAME as light */
+[data-theme="dark"] .theme-auth-btn:hover {
+    border-color: var(--bs-secondary) !important;
+}
+
+/* animation circle SAME */
+[data-theme="dark"] .theme-auth-btn::before {
+    background: #116466 !important;
+}
+
+
+/* =========================================
+   🔥 PROJECT FILTER (DARK MODE FIX)
+   ========================================= */
+
+/* wrapper */
+[data-theme="dark"] .filter-wrapper {
+    background: #1c2c2a !important;
+    border: 1px solid rgba(78,201,203,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* label */
+[data-theme="dark"] .filter-label {
+    color: #a8c4c0;
+}
+
+/* buttons */
+[data-theme="dark"] .filter-btn {
+    background: #162220;
+    color: #ddecea;
+    border: 1px solid rgba(78,201,203,0.2);
+}
+
+/* hover */
+[data-theme="dark"] .filter-btn:hover {
+    background: rgba(78,201,203,0.15);
+    color: #4ec9cb;
+}
+
+/* active button */
+[data-theme="dark"] .filter-btn.active {
+    background: #4ec9cb;
+    color: #0a0f0e;
+    border-color: #4ec9cb;
+}
+
+/* select dropdown */
+[data-theme="dark"] #categoryFilter {
+    background: #162220 !important;
+    color: #ddecea !important;
+    border: 1px solid rgba(78,201,203,0.3) !important;
+}
+
+/* dropdown options */
+[data-theme="dark"] #categoryFilter option {
+    background: #1c2c2a;
+    color: #ddecea;
+}
+
+/* ===============================
+   🌙 CUSTOM DROPDOWN DARK
+   =============================== */
+
+[data-theme="dark"] .dropdown-selected {
+    background: #162220;
+    color: #ddecea;
+    border: 1px solid rgba(78,201,203,0.3);
+}
+
+[data-theme="dark"] .dropdown-options {
+    background: #1c2c2a;
+    border: 1px solid rgba(78,201,203,0.2);
+}
+
+[data-theme="dark"] .dropdown-options div {
+    color: #ddecea;
+}
+
+[data-theme="dark"] .dropdown-options div:hover {
+    background: rgba(78,201,203,0.15);
+    color: #4ec9cb;
+}

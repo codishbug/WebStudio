@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<title>Admin - All Projects</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+<link href="{{ url_for('static', filename='user/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='admin/admin.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='admin/admin-theme.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='admin/project-images.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="admin-container projects-page">
+<div class="admin-main">
+    
+<a href="{{ url_for('project_back') }}" class="back-arrow-btn">
+<i class="fa fa-arrow-left"></i>
+</a>
+
+<div class="admin-topbar text-center">
+<h2 class="projects-title">All Projects</h2>
+</div>
+
+<div class="admin-table mt-4">
+
+<table class="table align-middle projects-table">
+
+<thead>
+<tr>
+<th>Image</th>
+<th>Project Name</th>
+<th>Description</th>
+<th>Category</th>
+<th>Has Price</th>
+<th>Base Price</th>
+<th>Currency</th>
+<th>Division</th>
+<th>Preview</th>
+<th>GitHub</th>
+<th width="120">Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for project in projects %}
+<tr>
+
+<td>
+{% if project.thumbnail %}
+<img src="{{ project.thumbnail }}" width="80">
+{% endif %}
+</td>
+
+<td>{{ project.title }}</td>
+
+<td style="max-width:220px;">
+{{ project.description }}
+</td>
+
+<td>{{ project.category }}</td>
+
+<td>
+{% if project.has_price %}Yes{% else %}No{% endif %}
+</td>
+
+<td>
+{% if project.has_price %}
+{{ project.base_price }}
+{% else %}
+-
+{% endif %}
+</td>
+
+<td>
+{% if project.has_price %}
+{{ project.base_currency }}
+{% else %}
+-
+{% endif %}
+</td>
+<td>
+{{ project.division or "-" }}
+</td>
+<td>
+{% if project.preview_link %}
+<a href="{{ project.preview_link }}" target="_blank">
+<i class="fa fa-external-link-alt"></i>
+</a>
+{% endif %}
+</td>
+
+<td>
+{% if project.github_link %}
+<a href="{{ project.github_link }}" target="_blank">
+<i class="fab fa-github"></i>
+</a>
+{% endif %}
+</td>
+
+<td>
+
+<button type="button" class="action-btn editBtn"
+
+data-id="{{ project.id }}"
+data-title="{{ project.title }}"
+data-description="{{ project.description }}"
+data-category="{{ project.category }}"
+data-preview="{{ project.preview_link }}"
+data-github="{{ project.github_link }}"
+data-hasprice="{{ project.has_price }}"
+data-price="{{ project.base_price }}"
+data-currency="{{ project.base_currency }}"
+data-division="{{ project.division }}"
+data-images='{{ project.images | tojson }}'
+
+>
+<i class="fa fa-edit"></i>
+</button>
+
+<button type="button" class="action-btn deleteBtn"
+data-id="{{ project.id }}">
+<i class="fa fa-trash"></i>
+</button>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+</div>
+
+
+<!-- POPUP FORM -->
+
+<div id="formPopup" class="form-popup">
+
+<div class="form-popup-content">
+
+<button id="closeForm" class="close-btn">&times;</button>
+
+<h3 class="mb-4 text-primary">Update Project</h3>
+
+<form id="projectForm"
+action="/admin/add-project"
+method="POST"
+enctype="multipart/form-data">
+
+<input type="hidden" name="project_id" id="projectId">
+
+<div class="project-wrapper">
+
+<div class="project-left">
+
+<div class="form-row">
+<input type="text" name="title" placeholder="Project Name" required>
+<input type="text" name="description" placeholder="Short Description" required>
+</div>
+
+<div class="form-row">
+
+<select name="category" required>
+<option value="">Select Category</option>
+<option>Portfolio</option>
+<option>E-Commerce</option>
+<option>Business</option>
+<option>Landing Page</option>
+</select>
+
+<label class="checkbox-wrapper">
+<input type="checkbox" id="hasPriceCheck" name="has_price" value="true">
+Has Price
+</label>
+<div class="division-switch">
+
+                                <span class="division-text">A</span>
+
+                                <label class="switch">
+                                    <input type="checkbox" name="division_toggle" id="divisionToggle">
+                                    <span class="slider"></span>
+                                </label>
+
+                                <span class="division-text">B</span>
+
+                                <input type="hidden" name="division" id="divisionValue" value="A">
+
+                            </div>
+</div>
+
+<div class="form-row price-row" id="priceFields" style="display:none;">
+
+<input type="number" name="base_price" id="basePrice" placeholder="Base Price">
+
+<select name="base_currency" id="baseCurrency">
+<option value="">Currency</option>
+<option>USD</option>
+<option>INR</option>
+<option>EUR</option>
+</select>
+
+</div>
+
+<div class="form-row">
+<input type="url" name="preview_link" placeholder="Preview Link">
+<input type="url" name="github_link" placeholder="GitHub Link">
+</div>
+
+</div>
+
+
+<div class="project-right">
+<div class="image-grid" id="imageGrid"></div>
+</div>
+
+</div>
+
+<div class="form-submit-area">
+<button type="submit" class="admin-btn w-100">
+Update Project
+</button>
+</div>
+
+</form>
+
+</div>
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded",function(){
+
+const popup=document.getElementById("formPopup");
+const closeBtn=document.getElementById("closeForm");
+const grid=document.getElementById("imageGrid");
+const projectForm=document.getElementById("projectForm");
+
+const hasPriceCheck=document.getElementById("hasPriceCheck");
+const priceFields=document.getElementById("priceFields");
+
+hasPriceCheck.addEventListener("change",function(){
+priceFields.style.display=this.checked ? "flex" : "none";
+});
+
+
+/* ================= EDIT PROJECT ================= */
+
+document.querySelectorAll(".editBtn").forEach(btn=>{
+
+btn.addEventListener("click",function(){
+
+popup.style.display="flex";
+
+grid.innerHTML="";
+
+document.getElementById("projectId").value=this.dataset.id;
+
+document.querySelector("input[name='title']").value=this.dataset.title;
+document.querySelector("input[name='description']").value=this.dataset.description;
+document.querySelector("select[name='category']").value=this.dataset.category;
+const division = this.dataset.division || "A";
+
+document.getElementById("divisionValue").value = division;
+document.getElementById("divisionToggle").checked = (division === "B");
+document.querySelector("input[name='preview_link']").value=this.dataset.preview || "";
+document.querySelector("input[name='github_link']").value=this.dataset.github || "";
+
+const hasPrice=this.dataset.hasprice==="True" || this.dataset.hasprice==="true";
+
+hasPriceCheck.checked=hasPrice;
+priceFields.style.display=hasPrice ? "flex" : "none";
+
+document.getElementById("basePrice").value=this.dataset.price || "";
+document.getElementById("baseCurrency").value=this.dataset.currency || "";
+
+
+/* EXISTING IMAGES */
+
+const images=JSON.parse(this.dataset.images || "[]");
+
+images.forEach(img=>{
+
+const card=document.createElement("div");
+card.className="image-card";
+
+card.innerHTML=`
+<img src="${img}">
+<button type="button" class="remove-btn" data-url="${img}">✖</button>
+`;
+
+grid.appendChild(card);
+
+});
+
+/* ADD BUTTON */
+
+createAddButton();
+
+});
+
+});
+
+
+function createAddButton(){
+
+const addBtn=document.createElement("label");
+addBtn.className="add-image";
+
+addBtn.innerHTML=`
++
+<input type="file" name="image_file" multiple hidden>
+`;
+
+grid.appendChild(addBtn);
+
+const fileInput=addBtn.querySelector("input");
+
+fileInput.addEventListener("change",function(){
+
+const files=this.files;
+
+for(let i=0;i<files.length;i++){
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+const card=document.createElement("div");
+card.className="image-card";
+
+card.innerHTML=`
+<img src="${e.target.result}">
+<button type="button" class="remove-btn">✖</button>
+`;
+
+grid.insertBefore(card,addBtn);
+
+};
+
+reader.readAsDataURL(files[i]);
+
+}
+
+});
+
+}
+
+
+/* CLOSE POPUP */
+
+closeBtn.addEventListener("click",function(){
+popup.style.display="none";
+});
+
+
+/* ================= DELETE PROJECT ================= */
+
+document.querySelectorAll(".deleteBtn").forEach(btn=>{
+
+btn.addEventListener("click",async function(){
+
+const id=this.dataset.id;
+
+if(!confirm("Delete this project?"))return;
+
+await fetch(`/admin/delete-project/${id}`,{
+method:"DELETE"
+});
+
+location.reload();
+
+});
+
+});
+
+
+/* ================= DELETE IMAGE ================= */
+
+document.addEventListener("click",async function(e){
+
+if(e.target.classList.contains("remove-btn")){
+
+const card=e.target.closest(".image-card");
+const url=e.target.dataset.url;
+
+if(url){
+
+await fetch("/admin/delete-image",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({image_url:url})
+});
+
+}
+
+card.remove();
+
+}
+
+});
+
+
+/* ================= FIX: AJAX FORM SUBMIT ================= */
+
+projectForm.addEventListener("submit",async function(e){
+
+e.preventDefault();
+
+const formData=new FormData(projectForm);
+
+try{
+
+const response=await fetch(projectForm.action,{
+method:"POST",
+body:formData
+});
+
+const result=await response.json();
+
+if(result.success){
+
+popup.style.display="none";
+
+location.reload();
+
+}else{
+
+alert("Failed to update project");
+
+}
+
+}catch(error){
+
+console.error(error);
+alert("Server error");
+
+}
+
+});
+
+});
+
+</script>
+
+<script>
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+} else {
+    document.documentElement.setAttribute("data-theme", "light");
+}
+</script>
+
+</body>
+</html>

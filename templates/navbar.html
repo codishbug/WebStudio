@@ -1,0 +1,94 @@
+<!-- Navbar Start -->
+<div class="container-fluid navbar-wrapper">
+    <div class="container-fluid px-5 position-relative">
+
+        <nav class="navbar navbar-dark navbar-expand-lg py-2 position-relative">
+
+            <!-- LEFT: LOGO -->
+            <a href="{{ url_for('index') }}" class="navbar-brand d-flex align-items-center">
+                <img src="{{ url_for('static', filename='user/img/webstudio_img.png') }}" 
+                    alt="WebStudio Logo"
+                    class="navbar-logo">
+            </a>
+
+            <!-- TOGGLER -->
+            <button type="button" class="navbar-toggler ms-auto" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- CENTER NAV LINKS (TRUE CENTER) -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav nav-center p-0">
+
+                    <a href="{{ url_for('index') }}"
+                       class="nav-item nav-link {% if request.endpoint == 'index' %}active text-secondary{% endif %}">
+                       Home
+                    </a>
+
+                    <a href="{{ url_for('about') }}"
+                       class="nav-item nav-link {% if request.endpoint == 'about' %}active text-secondary{% endif %}">
+                       About
+                    </a>
+
+                    <a href="{{ url_for('service') }}"
+                       class="nav-item nav-link {% if request.endpoint == 'service' %}active text-secondary{% endif %}">
+                       Services
+                    </a>
+
+                    <a href="{{ url_for('project') }}"
+                       class="nav-item nav-link {% if request.endpoint == 'project' %}active text-secondary{% endif %}">
+                       Projects
+                    </a>
+
+                    <a href="{{ url_for('blog') }}"
+                       class="nav-item nav-link {% if request.endpoint == 'blog' %}active text-secondary{% endif %}">
+                       Blogs
+                    </a>
+
+                    <a href="{{ url_for('testimonial') }}"
+                       class="nav-item nav-link {% if request.endpoint == 'testimonial' %}active text-secondary{% endif %}">
+                       Testimonial
+                    </a>
+
+                    <a href="{{ url_for('contact') }}"
+                       class="nav-item nav-link {% if request.endpoint == 'contact' %}active text-secondary{% endif %}">
+                       Contact
+                    </a>
+
+
+                    {% if session.get("admin") %}
+                    <a href="{{ url_for('admin_dashboard') }}"
+                    class="nav-item nav-link {% if request.endpoint == 'admin_dashboard' %}active text-secondary{% endif %}">
+                    Admin
+                    </a>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE (ONLY THEME BUTTON) -->
+            <div class="d-none d-xl-flex align-items-center nav-right">
+
+    <!-- Theme Button -->
+    <button id="themeToggle" class="theme-btn me-2">
+        <i id="themeIcon" class="fa fa-moon"></i>
+    </button>
+
+            {% if session.get("user_id") or session.get("admin") %}
+                <a href="{{ url_for('logout') }}" class="theme-auth-btn">
+                    <i class="fa fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            {% else %}
+                <a href="{{ url_for('login_page') }}" class="theme-auth-btn">
+                    <i class="fa fa-user"></i>
+                    <span>Login</span>
+                </a>
+        {% endif %}
+
+</div>
+
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->

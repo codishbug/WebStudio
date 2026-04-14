@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+        <!-- FAQ Start -->
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+            <h5 class="text-secondary">FAQs</h5>
+            <h1>Frequently Asked Questions</h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <!-- Q1 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        What is WebRyx?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        WebRyx is a platform where users can download professionally designed website templates to quickly build their own websites. Our templates are responsive, modern, and easy to customize.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Are the templates free?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        We offer both free and premium templates. Free templates can be downloaded instantly, while premium templates require a one-time payment.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Can I use WebRyx templates for commercial projects?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. You can use our templates for personal and commercial projects unless stated otherwise in the license.
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Do I need coding knowledge to use the templates?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Basic knowledge of HTML, CSS, and JavaScript is helpful. However, our templates are structured clearly, making them beginner-friendly.
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Are the templates mobile responsive?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. All WebRyx templates are fully responsive and work smoothly on mobile, tablet, and desktop devices.
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Can I customize the templates?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Absolutely. You can edit colors, fonts, images, content, and layout sections. The templates are built to be easily customizable.
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Will I receive updates after purchasing a template?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. Premium users receive updates and improvements whenever they are available.
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        How do I download a template?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Simply choose a template, click Download, extract the ZIP file, and open the index.html file in your browser to start using it.
+                    </div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Do you provide support?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes. Basic support is provided for installation issues, setup guidance, and minor template-related questions.
+                    </div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="faq-item wow fadeInUp">
+                    <div class="faq-question">
+                        Can I resell WebRyx templates?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        No. Reselling or redistributing our templates as your own product is strictly prohibited.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FAQ End -->
+
+
+
+        <script>
+            const faqItems = document.querySelectorAll(".faq-item");
+
+            faqItems.forEach(item => {
+                item.querySelector(".faq-question").addEventListener("click", () => {
+
+                    faqItems.forEach(f => {
+                        if(f !== item){
+                            f.classList.remove("active");
+                        }
+                    });
+
+                    item.classList.toggle("active");
+                });
+            });
+        </script>
+  {% endblock %}
+

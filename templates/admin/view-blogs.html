@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<title>View Blogs – WebStudio Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- BOOTSTRAP -->
+    <link href="{{ url_for('static', filename='user/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='user/css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='admin/admin-theme.css') }}" rel="stylesheet">
+
+    <!-- ADMIN CSS -->
+    <link href="{{ url_for('static', filename='admin/admin.css') }}" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+.blog-preview-img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+</style>
+
+</head>
+
+<body class="p-4">
+
+<div class="container">
+
+<h2 class="text-primary mb-4">View Blogs</h2>
+
+<!-- Filters -->
+<div class="card shadow mb-4">
+    <div class="card-body d-flex flex-wrap gap-3 align-items-center">
+
+        <input type="text" 
+               id="searchInput"
+               class="form-control w-auto"
+               placeholder="Search blog title..."
+               onkeyup="filterBlogs()">
+
+        <select id="statusFilter"
+                class="form-select w-auto"
+                onchange="filterBlogs()">
+            <option value="all">All Status</option>
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+        </select>
+
+        <button class="btn btn-secondary"
+                onclick="resetFilters()">
+            Reset
+        </button>
+
+    </div>
+</div>
+
+<!-- BLOG TABLE -->
+<div class="card shadow">
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Read Time</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="blogsTable">
+                <!-- Dynamic -->
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+</div>
+
+
+<script>
+const supabaseClient = supabase.createClient(
+"https://yuuvbsctwcrzubblkjlq.supabase.co",
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXZic2N0d2NyenViYmxramxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3ODIzNjYsImV4cCI6MjA4NjM1ODM2Nn0.2js6OF_T1oBECrSHJVgSF7_H5KYTpWqdQAGjgs5dVUs"
+);
+
+let allBlogs = [];
+
+// LOAD BLOGS
+async function loadBlogs() {
+
+const { data, error } = await supabaseClient
+.from("blogs")
+.select("*")
+.order("id", { ascending: false });
+
+if (error) {
+console.log(error);
+return;
+}
+
+allBlogs = data;
+renderBlogs(allBlogs);
+}
+
+// RENDER TABLE
+function renderBlogs(blogs) {
+
+const table = document.getElementById("blogsTable");
+table.innerHTML = "";
+
+if (blogs.length === 0) {
+table.innerHTML = `
+<tr>
+<td colspan="6" class="text-center text-muted">
+No blogs found
+</td>
+</tr>`;
+return;
+}
+
+blogs.forEach(blog => {
+
+table.innerHTML += `
+<tr>
+<td>
+<img src="${blog.image_url || 'https://via.placeholder.com/80'}"
+     class="blog-preview-img">
+</td>
+
+<td>${blog.title}</td>
+
+<td>${blog.category}</td>
+
+<td>
+<span class="badge bg-${blog.status === "published" ? "success" : "warning"}">
+${blog.status}
+</span>
+</td>
+
+<td>${blog.read_time} min</td>
+
+<td>
+<a href="{{ url_for('blog_preview') }}?id=${blog.id}"
+   target="_blank"
+   class="btn btn-sm btn-outline-primary">
+   View
+</a>
+</td>
+</tr>
+`;
+});
+}
+
+// FILTER FUNCTION
+function filterBlogs() {
+
+const search = document.getElementById("searchInput").value.toLowerCase();
+const status = document.getElementById("statusFilter").value;
+
+let filtered = allBlogs.filter(blog => {
+
+const matchTitle = blog.title.toLowerCase().includes(search);
+const matchStatus = status === "all" || blog.status === status;
+
+return matchTitle && matchStatus;
+});
+
+renderBlogs(filtered);
+}
+
+// RESET FILTERS
+function resetFilters() {
+document.getElementById("searchInput").value = "";
+document.getElementById("statusFilter").value = "all";
+renderBlogs(allBlogs);
+}
+
+loadBlogs();
+
+</script>
+
+</body>
+
+<script>
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+        document.documentElement.setAttribute("data-theme", "light");
+    }
+</script>
+</html>

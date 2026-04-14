@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Create Blog – WebStudio Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='user/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- MAIN WEBSITE THEME -->
+    <link href="{{ url_for('static', filename='user/css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='admin/admin-theme.css') }}" rel="stylesheet">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        body {
+    background: var(--bs-light);
+}
+
+/* DARK MODE OVERRIDE */
+[data-theme="dark"] body {
+    background: #111918 !important;
+}
+
+        .admin-blog-card {
+            max-width: 900px;
+            margin: auto;
+             background: var(--bs-white);
+            border-radius: 18px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            padding: 35px;
+        }
+
+        [data-theme="dark"] .admin-blog-card {
+    background: linear-gradient(135deg, #1c2c2a, #162220) !important;
+    color: #ddecea !important;
+    border: 1px solid rgba(78, 201, 203, 0.2);
+}
+
+        .admin-blog-card h2 {
+            color: var(--bs-primary);
+            font-weight: 700;
+        }
+[data-theme="dark"] .admin-blog-card h2 {
+    color: #4ec9cb !important;
+}
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        [data-theme="dark"] label {
+    color: #bfeeee !important;
+}
+
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .btn-save {
+            background: var(--bs-primary);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .btn-save:hover {
+            background: var(--bs-secondary);
+            color: #fff;
+        
+        }
+
+
+        [data-theme="dark"] input[type="file"] {
+    background: #ffffff !important;
+    color: #2C3531 !important;
+}
+    </style>
+</head>
+
+<body class="p-4">
+
+<div class="admin-blog-card">
+
+    <h2 class="mb-4">Create New Blog</h2>
+
+    <!-- Title -->
+    <div class="mb-3">
+        <label>Blog Title</label>
+        <input type="text" id="title" class="form-control" placeholder="Enter blog title">
+    </div>
+    <!-- Excerpt -->
+    <div class="mb-3">
+        <label>Short Excerpt</label>
+        <textarea id="excerpt" class="form-control" rows="3"
+            placeholder="Short summary that appears on blog cards"></textarea>
+    </div>
+
+
+    <!-- Category -->
+    <div class="mb-3">
+        <label>Category</label>
+        <select id="category" class="form-select">
+            <option value="">Select category</option>
+            <option value="Web Design">Web Design</option>
+            <option value="Business">Business Growth</option>
+            <option value="Development">Development</option>
+            <option value="AI & Tech">AI & Tech</option>
+        </select>
+    </div>
+
+    <!-- Read Time -->
+    <div class="mb-3">
+        <label>Read Time (minutes)</label>
+        <input type="number" id="read_time" class="form-control" min="1" placeholder="e.g. 3">
+    </div>
+
+    <!-- Image -->
+    <div class="mb-3">
+        <label>Featured Image</label>
+        <input type="file" id="image" class="form-control">
+    </div>
+
+    <!-- Content -->
+    <div class="mb-3">
+        <label>Blog Content (HTML allowed)</label>
+        <textarea id="content" class="form-control" rows="10"
+            placeholder="Use <h4>, <p>, <ul>, <li> etc."></textarea>
+    </div>
+
+    <!-- Status -->
+    <div class="mb-4">
+        <label>Status</label>
+        <select id="status" class="form-select">
+            <option value="draft">Draft</option>
+            <option value="published">Publish</option>
+        </select>
+    </div>
+
+    <button onclick="addBlog()" class="btn btn-save">
+        Save Blog
+    </button>
+
+</div>
+
+<script>
+const client = supabase.createClient(
+    "https://yuuvbsctwcrzubblkjlq.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXZic2N0d2NyenViYmxramxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3ODIzNjYsImV4cCI6MjA4NjM1ODM2Nn0.2js6OF_T1oBECrSHJVgSF7_H5KYTpWqdQAGjgs5dVUs"
+);
+
+// Upload image
+async function uploadImage(file) {
+    const fileName = Date.now() + "-" + file.name;
+
+    const { error } = await client.storage
+        .from("blog-images")
+        .upload(fileName, file);
+
+    if (error) {
+        alert("Image upload failed");
+        return null;
+    }
+
+    const { data } = client.storage
+        .from("blog-images")
+        .getPublicUrl(fileName);
+
+    return data.publicUrl;
+}
+
+// Save blog
+async function addBlog() {
+
+    const file = document.getElementById("image").files[0];
+    let imageUrl = "";
+
+    if (file) {
+        imageUrl = await uploadImage(file);
+    }
+
+    const readMinutes = document.getElementById("read_time").value;
+
+    const { error } = await client
+        .from("blogs")
+        .insert([{
+            title: document.getElementById("title").value,
+            excerpt: document.getElementById("excerpt").value,
+            category: document.getElementById("category").value,
+            content: document.getElementById("content").value,
+            read_time: parseInt(readMinutes),
+            image_url: imageUrl,
+            status: document.getElementById("status").value
+        }]);
+
+    if (!error) {
+        alert("Blog saved successfully!");
+        location.reload();
+    } else {
+        alert(error.message);
+        console.log(error);
+    }
+}
+</script>
+<script>
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+        document.documentElement.setAttribute("data-theme", "light");
+    }
+</script>
+</body>
+</html>

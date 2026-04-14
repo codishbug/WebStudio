@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Blog Start -->
+<div class="container-fluid blog py-5 mb-5">
+    <div class="container">
+
+        <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+            <h5 class="text-secondary">Our Blog</h5>
+            <h1>Latest Blog & News</h1>
+        </div>
+
+        <div class="row g-5 justify-content-center" id="blogContainer">
+            <!-- Dynamic blogs will load here -->
+        </div>
+
+    </div>
+</div>
+<!-- Blog End -->
+
+
+<script src="{{ url_for('static', filename='user/js/blogs-main.js') }}"></script>
+{% endblock %}

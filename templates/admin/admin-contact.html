@@ -1,0 +1,137 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Contacts{% endblock %}
+{% block page_title %}Contact Messages{% endblock %}
+
+{% block extra_css %}
+
+    <style>
+
+        /* Gmail-style row */
+        .message-row {
+            cursor: pointer;
+            border-bottom: 1px solid #ececec;
+            padding: 14px 18px;
+            transition: 0.2s;
+        }
+
+        .message-row:hover {
+            background: rgba(0,0,0,0.04);
+        }
+
+        .message-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            align-items: center;
+        }
+
+        /* LEFT NAME */
+        .message-name {
+            font-weight: 600;
+            color: var(--bs-primary);
+        }
+
+        /* CENTER SUBJECT */
+        .message-subject {
+            text-align: center;
+            color: #666;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* RIGHT DATE */
+        .message-date {
+            text-align: right;
+            font-size: 13px;
+            color: #888;
+            white-space: nowrap;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+        <!-- Inbox -->
+        <div class="card mt-4 shadow-sm">
+            <div class="card-body p-0" id="messagesList">
+                <div class="p-3">Loading messages...</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+const supabaseUrl = "https://yuuvbsctwcrzubblkjlq.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1dXZic2N0d2NyenViYmxramxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3ODIzNjYsImV4cCI6MjA4NjM1ODM2Nn0.2js6OF_T1oBECrSHJVgSF7_H5KYTpWqdQAGjgs5dVUs";
+
+const { createClient } = supabase;
+const supabaseClient = createClient(supabaseUrl, supabaseKey);
+
+async function loadMessages() {
+
+    const { data, error } = await supabaseClient
+        .from("contact_messages")
+        .select("*")
+        .order("id", { ascending: false });
+
+    const list = document.getElementById("messagesList");
+
+    if(error){
+        list.innerHTML = "<div class='p-3 text-danger'>Failed to load messages</div>";
+        return;
+    }
+
+    if(data.length === 0){
+        list.innerHTML = "<div class='p-3'>No messages yet</div>";
+        return;
+    }
+
+    list.innerHTML = "";
+
+    data.forEach(msg => {
+        list.innerHTML += `
+            <div class="message-row" onclick="openMessage(${msg.id})">
+
+                <div class="message-content">
+
+                    <!-- LEFT -->
+                    <div class="message-name">
+                        ${msg.name}
+                    </div>
+
+                    <!-- CENTER -->
+                    <div class="message-subject">
+                        ${msg.subject}
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="message-date">
+                        ${msg.created_at ? new Date(msg.created_at).toLocaleDateString() : ""}
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+    });
+}
+
+function openMessage(id){
+    window.location.href = "{{ url_for('admin_messages') }}?id=" + id;
+}
+
+loadMessages();
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <!-- About Start -->
+        <div class="container-fluid py-3">
+            <div class="container pt-5">
+                <div class="row g-5">
+                    <div class="col-lg-5 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".3s">
+                        <div class="h-100 position-relative">
+                            <img src="{{ url_for('static', filename='user/img/about-1.jpg') }}" class="img-fluid w-75 rounded" alt="" style="margin-bottom: 25%;">
+                            <div class="position-absolute w-75" style="top: 25%; left: 25%;">
+                                <img src="{{ url_for('static', filename='user/img/about-2.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".5s">
+                        <h5 class="text-secondary">About Us</h5>
+                        <h1 class="mb-4">About WebStudio Modern Website Templates and Design Solutions</h1>
+                        <p>WebStudio is a modern template marketplace that provides high quality website templates for businesses creators and developers. Our goal is to make website creation simple fast and accessible for everyone. Users can explore a wide range of ready to use templates preview them in detail and choose the perfect design for their needs. After selecting a template customers can also connect with our team for complete website development and customization services.
+
+</p>
+                        <p class="mb-4">At WebStudio we combine creativity functionality and modern design to help you build a strong online presence with ease.</p>
+                       <button class="btn btn-secondary rounded-pill px-5 py-3 text-white" onclick="openModal()">
+                            More Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+
+        <!-- Why Choose Us Start -->
+<div class="container-fluid py-5 wcu-section">
+    <div class="container">
+        <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+            <h5 class="text-secondary">Why Choose Us</h5>
+            <h1>We Build More Than Just Websites</h1>
+            <p class="text-muted">From stunning templates to full custom builds, we deliver quality, speed, and excellence at every step.</p>
+        </div>
+
+        <div class="row g-4 wow fadeIn" data-wow-delay=".3s">
+            <div class="col-lg-4 col-md-6">
+                <div class="wcu-card">
+                    <span class="wcu-number">01</span>
+                    <div class="wcu-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h5>Premium Design Quality</h5>
+                    <p>Every template is crafted by expert designers with pixel-perfect attention to detail and modern aesthetics.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="wcu-card">
+                    <span class="wcu-number">02</span>
+                    <div class="wcu-icon"><i class="fas fa-bolt"></i></div>
+                    <h5>Fast &amp; Lightweight</h5>
+                    <p>Our templates are optimized for speed so your website loads instantly and ranks higher on search engines.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="wcu-card">
+                    <span class="wcu-number">03</span>
+                    <div class="wcu-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h5>Fully Responsive</h5>
+                    <p>Every template works flawlessly on mobile, tablet, and desktop — no extra work needed from your end.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="wcu-card">
+                    <span class="wcu-number">04</span>
+                    <div class="wcu-icon"><i class="fas fa-headset"></i></div>
+                    <h5>Dedicated Support</h5>
+                    <p>Our team is always available to help with customizations, queries, and any technical challenges you face.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="wcu-card">
+                    <span class="wcu-number">05</span>
+                    <div class="wcu-icon"><i class="fas fa-code"></i></div>
+                    <h5>Clean Codebase</h5>
+                    <p>Developer-friendly, well-structured, and easy to customize — built with best practices in mind always.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="wcu-card">
+                    <span class="wcu-number">06</span>
+                    <div class="wcu-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h5>Secure &amp; Reliable</h5>
+                    <p>We build with security-first principles ensuring your website and your customers' data stay protected.</p>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+<!-- Why Choose Us End -->
+         
+
+        <!-- Team Start -->
+        <div class="container-fluid py-5 mb-5 team">
+            <div class="container">
+                <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+                    <h5 class="text-secondary">Our Team</h5>
+                    <h1>Meet Us</h1>
+                </div>
+                <div class="row g-4 justify-content-center">
+
+    <div class="col-lg-4 col-md-6">
+        <div class="rounded team-item">
+            <div class="team-content">
+                <div class="team-img-icon">
+                    <div class="team-img rounded-circle">
+                        <img src="{{ url_for('static', filename='user/img/team-12.jpeg') }}" class="img-fluid w-100 rounded-circle">
+                    </div>
+                    <div class="team-name text-center py-3">
+                        <h4>Apurva Chaudhari</h4>
+                        <p class="m-0">Developer</p>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+        <div class="rounded team-item">
+            <div class="team-content">
+                <div class="team-img-icon">
+                    <div class="team-img rounded-circle">
+                        <img src="{{ url_for('static', filename='user/img/team-13.jpeg') }}" class="img-fluid w-100 rounded-circle">
+                    </div>
+                    <div class="team-name text-center py-3">
+                        <h4>Chaitali Takale</h4>
+                        <p class="m-0">Developer</p>
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+            </div>
+        </div>
+        <!-- Team End -->
+
+
+ 
+
+<script>
+function openModal() {
+  document.getElementById("detailsModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("detailsModal").style.display = "none";
+}
+
+// Close when clicking outside
+window.onclick = function(event) {
+  let modal = document.getElementById("detailsModal");
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+<!-- Modal -->
+<div id="detailsModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img src="https://yuuvbsctwcrzubblkjlq.supabase.co/storage/v1/object/public/Brochure%20Image/WebRyx%20Brochure.png"
+         style="width:100%; border-radius:10px;">
+  </div>
+</div>
+
+{% endblock %}
+
+  

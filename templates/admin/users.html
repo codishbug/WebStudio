@@ -1,0 +1,108 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Users – WebStudio Admin{% endblock %}
+{% block page_title %}Users Management{% endblock %}
+
+{% block content %}
+
+<br>
+
+
+<div class="container-fluid">
+
+<!-- SEARCH -->
+<!-- SEARCH (NO BOX) -->
+<div class="d-flex flex-wrap gap-3 align-items-center mb-4">
+
+  <input type="text"
+         id="searchInput"
+         class="form-control"
+         style="max-width: 300px;"
+         placeholder="Search username or email..."
+         onkeyup="filterUsers()">
+
+  <button class="btn btn-secondary" onclick="resetFilters()">
+    Reset
+  </button>
+
+</div>
+
+<!-- USERS TABLE -->
+<div class="admin-card">
+  <table class="table table-hover align-middle">
+    <thead style="background:#116466; color:white;">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Provider</th>
+        <th>Joined Date</th>
+      </tr>
+    </thead>
+
+    <tbody id="usersTable">
+      {% if users %}
+        {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            {% if user.provider == 'google' %}
+              <span style="
+                background:#e8f0fe;
+                color:#1a73e8;
+                padding:3px 10px;
+                border-radius:20px;
+                font-size:12px;
+                font-weight:600;">
+                Google
+              </span>
+            {% else %}
+              <span style="
+                background:#e9f5f4;
+                color:#116466;
+                padding:3px 10px;
+                border-radius:20px;
+                font-size:12px;
+                font-weight:600;">
+                Manual
+              </span>
+            {% endif %}
+          </td>
+          <td>{{ user.created_at[:10] if user.created_at else '—' }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="5" class="text-center text-muted">No users found</td>
+        </tr>
+      {% endif %}
+    </tbody>
+
+  </table>
+</div>
+
+</div>
+
+<script>
+function filterUsers() {
+  var input = document.getElementById("searchInput").value.toLowerCase();
+  var rows  = document.querySelectorAll("#usersTable tr");
+  rows.forEach(function(row) {
+    if (!row.children[1]) return;
+    var username = row.children[1].textContent.toLowerCase();
+    var email    = row.children[2].textContent.toLowerCase();
+    row.style.display = (username.includes(input) || email.includes(input)) ? "" : "none";
+  });
+}
+
+function resetFilters() {
+  document.getElementById("searchInput").value = "";
+  document.querySelectorAll("#usersTable tr").forEach(function(row) {
+    row.style.display = "";
+  });
+}
+</script>
+
+{% endblock %}
